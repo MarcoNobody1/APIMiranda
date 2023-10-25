@@ -18,21 +18,25 @@ const defaultUser = {
     user: "admin",
     password: "admin",
 };
-const secretToken = process.env.SECRET_TOKEN || '';
+const secretToken = process.env.SECRET_TOKEN || "";
 function login(user, password) {
     return __awaiter(this, void 0, void 0, function* () {
         if (defaultUser.user !== user || defaultUser.password !== password) {
-            throw new Error('Username or Password Incorrect!');
+            throw new Error("Username or Password Incorrect!");
         }
         return signJWT({ user });
     });
 }
 function signJWT(payload) {
-    const token = jsonwebtoken_1.default.sign(payload, secretToken, { expiresIn: '1h' });
+    const token = jsonwebtoken_1.default.sign(payload, secretToken, { expiresIn: "1h" });
     return { payload, token };
 }
 function verifyJWT(token) {
-    // Verify the jwt token
+    jsonwebtoken_1.default.verify(token, secretToken, (err, token) => {
+        if (err)
+            throw new Error("You are not authorized.");
+        return token;
+    });
 }
 const authService = {
     login,
