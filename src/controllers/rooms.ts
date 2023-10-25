@@ -15,7 +15,7 @@ roomsController.get("/", async (_req: Request, res: Response) => {
 
 roomsController.get("/:id", async (req: Request, res: Response) => {
     try {
-      const result = await RoomService.getOneRoom(parseInt(req.params.id));
+      const result = await RoomService.getOneRoom(req.params.id);
         res.send(result);
 
     } catch (error) {
@@ -26,7 +26,7 @@ roomsController.get("/:id", async (req: Request, res: Response) => {
 
 roomsController.delete("/:id", async (req: Request, res: Response) => {
     try {
-      const result = await RoomService.delete(parseInt(req.params.id));
+      const result = await RoomService.delete(req.params.id);
       res.status(200).send(result);
     } catch (error) {
       res.status(400).send(`${error}`);
@@ -36,7 +36,7 @@ roomsController.delete("/:id", async (req: Request, res: Response) => {
 
 roomsController.put("/:id", async (req: Request,res: Response) => {
     try {
-      const result = await RoomService.updateRoom(parseInt(req.params.id), req.body);
+      const result = await RoomService.updateRoom(req.params.id, req.body);
       res.status(200).send(result);
     } catch (error) {
       res.status(400).send(`${error}`);

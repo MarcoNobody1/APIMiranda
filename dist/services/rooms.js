@@ -27,7 +27,7 @@ function getAllrooms() {
 function getOneRoom(RoomId) {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const data = yield exports.Rooms.filter((Room) => Room.room_name.id === RoomId.toString());
+        const data = yield exports.Rooms.filter((Room) => Room.room_name.id === RoomId);
         if (data.length === 0)
             throw new Error("No hay ninguna reserva con ese id.");
         return data;
@@ -46,7 +46,7 @@ function postNewRoom(Room) {
 function updateRoom(RoomId, update) {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const RoomIndex = yield exports.Rooms.findIndex((Room) => Room.room_name.id === RoomId.toString());
+        const RoomIndex = yield exports.Rooms.findIndex((Room) => Room.room_name.id === RoomId);
         if (RoomIndex === -1)
             throw new Error("No puedes modificar una reserva que no existe.");
         const data = [...exports.Rooms];
@@ -57,7 +57,7 @@ function updateRoom(RoomId, update) {
 function deleteRoom(RoomId) {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const RoomIndex = yield exports.Rooms.findIndex((Room) => Room.room_name.id === RoomId.toString());
+        const RoomIndex = yield exports.Rooms.findIndex((Room) => Room.room_name.id === RoomId);
         if (RoomIndex === -1)
             throw new Error("No hay ninguna reserva con ese id.");
         const data = exports.Rooms.splice(RoomIndex, 1);

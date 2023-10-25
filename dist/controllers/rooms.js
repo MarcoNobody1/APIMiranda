@@ -24,7 +24,7 @@ exports.roomsController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0
 }));
 exports.roomsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.getOneRoom(parseInt(req.params.id));
+        const result = yield rooms_1.RoomService.getOneRoom(req.params.id);
         res.send(result);
     }
     catch (error) {
@@ -33,7 +33,7 @@ exports.roomsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void
 }));
 exports.roomsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.delete(parseInt(req.params.id));
+        const result = yield rooms_1.RoomService.delete(req.params.id);
         res.status(200).send(result);
     }
     catch (error) {
@@ -42,7 +42,7 @@ exports.roomsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, v
 }));
 exports.roomsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.updateRoom(parseInt(req.params.id), req.body);
+        const result = yield rooms_1.RoomService.updateRoom(req.params.id, req.body);
         res.status(200).send(result);
     }
     catch (error) {
