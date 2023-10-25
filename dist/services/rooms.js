@@ -12,62 +12,62 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookingService = exports.bookings = void 0;
-const Bookings_json_1 = __importDefault(require("../data/Bookings.json"));
-exports.bookings = Bookings_json_1.default;
-function getAllBookings() {
+exports.RoomService = exports.Rooms = void 0;
+const rooms_json_1 = __importDefault(require("../data/rooms.json"));
+exports.Rooms = rooms_json_1.default;
+function getAllrooms() {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const data = yield exports.bookings;
+        const data = yield exports.Rooms;
         if (data.length === 0)
             throw new Error("No existen reservas.");
         return data;
     });
 }
-function getOneBooking(bookingId) {
+function getOneRoom(RoomId) {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const data = yield exports.bookings.filter((booking) => booking.guest.id_reserva === bookingId.toString());
+        const data = yield exports.Rooms.filter((Room) => Room.room_name.id === RoomId.toString());
         if (data.length === 0)
             throw new Error("No hay ninguna reserva con ese id.");
         return data;
     });
 }
-function postNewBooking(booking) {
+function postNewRoom(Room) {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const initialLength = exports.bookings.length;
-        const data = yield exports.bookings.push(booking);
+        const initialLength = exports.Rooms.length;
+        const data = yield exports.Rooms.push(Room);
         if (data === initialLength)
             throw new Error("Tu reserva no se añadio correctamente.");
         return data;
     });
 }
-function updateBooking(bookingId, update) {
+function updateRoom(RoomId, update) {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const bookingIndex = yield exports.bookings.findIndex((booking) => booking.guest.id_reserva === bookingId.toString());
-        if (bookingIndex === -1)
+        const RoomIndex = yield exports.Rooms.findIndex((Room) => Room.room_name.id === RoomId.toString());
+        if (RoomIndex === -1)
             throw new Error("No puedes modificar una reserva que no existe.");
-        const data = [...exports.bookings];
-        Object.assign(data[bookingIndex], update);
+        const data = [...exports.Rooms];
+        Object.assign(data[RoomIndex], update);
         return data;
     });
 }
-function deleteBooking(bookingId) {
+function deleteRoom(RoomId) {
     return __awaiter(this, void 0, void 0, function* () {
         //logica futura en DB.
-        const bookingIndex = yield exports.bookings.findIndex((booking) => booking.guest.id_reserva === bookingId.toString());
-        if (bookingIndex === -1)
+        const RoomIndex = yield exports.Rooms.findIndex((Room) => Room.room_name.id === RoomId.toString());
+        if (RoomIndex === -1)
             throw new Error("No hay ninguna reserva con ese id.");
-        const data = exports.bookings.splice(bookingIndex, 1);
+        const data = exports.Rooms.splice(RoomIndex, 1);
         return data;
     });
 }
-exports.bookingService = {
-    getAllBookings,
-    getOneBooking,
-    postNewBooking,
-    updateBooking,
-    delete: deleteBooking,
+exports.RoomService = {
+    getAllrooms,
+    getOneRoom,
+    postNewRoom,
+    updateRoom,
+    delete: deleteRoom,
 };
