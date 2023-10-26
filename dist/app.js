@@ -12,10 +12,12 @@ const login_1 = require("./controllers/login");
 const auth_1 = __importDefault(require("./middleware/auth"));
 const contacts_1 = require("./controllers/contacts");
 const users_1 = require("./controllers/users");
+const Info_json_1 = __importDefault(require("./data/Info.json"));
 exports.app = (0, express_1.default)();
 exports.app.use((0, cors_1.default)());
 exports.app.use(express_1.default.json());
 // public routes & middleware
+exports.app.use('/info', (req, res) => res.send(Info_json_1.default));
 exports.app.use('/login', login_1.loginController);
 exports.app.use(auth_1.default);
 // private routes
