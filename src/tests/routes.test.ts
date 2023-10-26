@@ -34,6 +34,7 @@ describe("Info Testing", () => {
     expect(res.body).toHaveProperty("endpoints");
   });
 });
+
 describe("Bookings Testing", () => {
   let authToken: string;
 
