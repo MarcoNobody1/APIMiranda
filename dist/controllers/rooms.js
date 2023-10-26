@@ -28,7 +28,7 @@ exports.roomsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void
         res.send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.roomsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,7 +37,7 @@ exports.roomsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, v
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.roomsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,7 +46,7 @@ exports.roomsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.roomsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,6 +55,6 @@ exports.roomsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0
         res.status(200).send(`Your Room is number ${result}`);
     }
     catch (error) {
-        res.status(500).send(`${error}`);
+        res.status(500).json(`${error}`);
     }
 }));

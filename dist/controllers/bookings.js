@@ -28,7 +28,7 @@ exports.bookingsController.get("/:id", (req, res) => __awaiter(void 0, void 0, v
         res.send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.bookingsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,7 +37,7 @@ exports.bookingsController.delete("/:id", (req, res) => __awaiter(void 0, void 0
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.bookingsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,15 +46,15 @@ exports.bookingsController.put("/:id", (req, res) => __awaiter(void 0, void 0, v
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.bookingsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield bookings_1.bookingService.postNewBooking(req.body);
-        res.status(200).send(`Your booking is number ${result}`);
+        res.status(200).json(`Your booking is number ${result}`);
     }
     catch (error) {
-        res.status(500).send(`${error}`);
+        res.status(500).json(`${error}`);
     }
 }));

@@ -28,7 +28,7 @@ exports.contactsController.get("/:id", (req, res) => __awaiter(void 0, void 0, v
         res.send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.contactsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,7 +37,7 @@ exports.contactsController.delete("/:id", (req, res) => __awaiter(void 0, void 0
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.contactsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,7 +46,7 @@ exports.contactsController.put("/:id", (req, res) => __awaiter(void 0, void 0, v
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.contactsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -19,7 +19,7 @@ exports.usersController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0
         res.send(result);
     }
     catch (error) {
-        res.status(500).send("Error al obtener los mensajes.");
+        res.status(500).json("Error al obtener los mensajes.");
     }
 }));
 exports.usersController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -28,7 +28,7 @@ exports.usersController.get("/:id", (req, res) => __awaiter(void 0, void 0, void
         res.send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.usersController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -37,7 +37,7 @@ exports.usersController.delete("/:id", (req, res) => __awaiter(void 0, void 0, v
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.usersController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -46,7 +46,7 @@ exports.usersController.put("/:id", (req, res) => __awaiter(void 0, void 0, void
         res.status(200).send(result);
     }
     catch (error) {
-        res.status(400).send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
 exports.usersController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,6 +55,6 @@ exports.usersController.post("/", (req, res) => __awaiter(void 0, void 0, void 0
         res.status(200).send(`Your user is number ${result}`);
     }
     catch (error) {
-        res.status(500).send(`${error}`);
+        res.status(500).json(`${error}`);
     }
 }));

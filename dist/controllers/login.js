@@ -24,6 +24,6 @@ exports.loginController.post("/", (req, res) => __awaiter(void 0, void 0, void 0
         res.send(result);
     }
     catch (error) {
-        res.send(`${error}`);
+        res.status(400).json(`${error}`);
     }
 }));
