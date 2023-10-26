@@ -12,7 +12,7 @@ async function login(user: string, password: string) {
   if (defaultUser.user !== user || defaultUser.password !== password) {
     throw new Error("Username or Password Incorrect!");
   }
-  return signJWT({ user });
+  return await signJWT({ user });
 }
 
 function signJWT(payload: { user: string }) {
