@@ -8,13 +8,13 @@ import { contactsController } from "./controllers/contacts";
 import { usersController } from "./controllers/users";
 import infoJSON from "./data/Info.json"
 
-export const app = express()
+export const app: Express = express()
 
 app.use(cors())
 app.use(express.json())
 
 // public routes & middleware
-app.use('/info', (req :Request, res: Response) => res.send(infoJSON))
+app.use('/info', (_req :Request, res: Response) => res.send(infoJSON))
 app.use('/login', loginController)
 app.use(authMiddleware)
 
