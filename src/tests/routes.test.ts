@@ -89,10 +89,10 @@ describe("Bookings Testing", () => {
 
   it("should return deleted booking with DELETE method", async () => {
     const res = await supertest(app)
-      .delete("/bookings/98765")
+      .delete("/bookings/24680")
       .set("token", authToken);
 
-    expect(res.body[0].guest.id_reserva).toEqual("98765");
+    expect(res.body[0].guest.id_reserva).toEqual("24680");
   });
 
   it("should return updated booking with PUT method", async () => {
@@ -203,12 +203,12 @@ describe("Rooms Testing", () => {
     expect(res.body[0].room_name.id).toEqual("1ABCD123");
   });
 
-  it("should return deleted booking with DELETE method", async () => {
+  it("should return deleted room with DELETE method", async () => {
     const res = await supertest(app)
-      .delete("/rooms/1ABCD123")
+      .delete("/rooms/2EFGH456")
       .set("token", authToken);
 
-    expect(res.body[0].room_name.id).toEqual("1ABCD123");
+    expect(res.body[0].room_name.id).toEqual("2EFGH456");
   });
 
   it("should return updated room with PUT method", async () => {
@@ -276,7 +276,7 @@ describe("Contacts Testing", () => {
   it("should return all contacts with GET method", async () => {
     const res = await supertest(app).get("/contacts").set("token", authToken);
 
-    expect(res.body[0]).toHaveProperty("offer_price");
+    expect(res.body[0]).toHaveProperty("comment");
   });
 
   it("should add one contact with POST method", async () => {
@@ -315,10 +315,10 @@ describe("Contacts Testing", () => {
 
   it("should return deleted booking with DELETE method", async () => {
     const res = await supertest(app)
-      .delete("/contacts/12345")
+      .delete("/contacts/67890")
       .set("token", authToken);
 
-    expect(res.body[0].date.id).toEqual("12345");
+    expect(res.body[0].date.id).toEqual("67890");
   });
 
   it("should return updated room with PUT method", async () => {
@@ -349,8 +349,104 @@ describe("Contacts Testing", () => {
     const new_comment = res.body[0].comment;
 
     expect(prev_comment).not.toEqual(new_comment);
-    expect(res.body[0].comment).toEqual(
-      "This is a modified contact"
-    );
+    expect(res.body[0].comment).toEqual("This is a modified contact");
+  });
+});
+
+describe("Users Testing", () => {
+  let authToken: string;
+
+  beforeAll(async () => {
+    const res = await supertest(app).post("/login").send({
+      user: "admin",
+      password: "admin",
+    });
+    authToken = res.body.token;
+  });
+
+  it("should enter users", async () => {
+    const res = await supertest(app).get("/users").set("token", authToken);
+    expect(res.statusCode).toEqual(200);
+  });
+
+  it("should return all users with GET method", async () => {
+    const res = await supertest(app).get("/users").set("token", authToken);
+
+    expect(res.body[0]).toHaveProperty("job_description");
+  });
+
+  it("should add one contact with POST method", async () => {
+    const res1 = await supertest(app).get("/users").set("token", authToken);
+
+    const initialLength = res1.body.length;
+
+    const res = await supertest(app)
+      .post("/users")
+      .set("token", authToken)
+      .send({
+        name: {
+          photo: "https://robohash.org/employee1?set=set3.jpg",
+          username: "Angel Samuel",
+          id: "121dfeifnIF",
+          employee_position: "Manager",
+          email: "thisIsA@NewUser.com",
+          password_hash: "IDontLikeThis",
+        },
+        start_date: "2023-01-15",
+        job_description:
+          "General hotel management, staff supervision, strategic decision-making.",
+        contact: "+1234567890",
+        activity: "active",
+      });
+
+    expect(res.body).toEqual(`Your user is number ${initialLength + 1}`);
+  });
+
+  it("should return one contact with GET method", async () => {
+    const res = await supertest(app)
+      .get("/users/121dfeifnIF")
+      .set("token", authToken);
+
+    expect(res.body[0].name.id).toEqual("121dfeifnIF");
+  });
+
+  it("should return deleted booking with DELETE method", async () => {
+    const res = await supertest(app)
+      .delete("/users/2abCdeFgH")
+      .set("token", authToken);
+
+    expect(res.body[0].name.id).toEqual("2abCdeFgH");
+  });
+
+  it("should return updated room with PUT method", async () => {
+    const prev_res = await supertest(app)
+      .get("/users/121dfeifnIF")
+      .set("token", authToken);
+
+    const prev_email = prev_res.body[0].name.email;
+
+    const res = await supertest(app)
+      .put("/users/121dfeifnIF")
+      .set("token", authToken)
+      .send({
+        name: {
+          photo: "https://robohash.org/employee1?set=set3.jpg",
+          username: "Juan Rodriguez",
+          id: "121dfeifnIF",
+          employee_position: "Manager",
+          email: "thisIsA@UpdatedUser.com",
+          password_hash: "ILoveProgramming",
+        },
+        start_date: "2023-01-15",
+        job_description:
+          "General hotel management, staff supervision, strategic decision-making.",
+        contact: "+1234567890",
+        activity: "active",
+      });
+
+    const new_email = res.body[0].name.email;
+
+    expect(prev_email).not.toEqual(new_email);
+    expect(res.body[0].name.email).toEqual("thisIsA@UpdatedUser.com");
   });
 });
