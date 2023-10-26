@@ -26,6 +26,14 @@ describe("Login Testing", () => {
   });
 });
 
+describe("Info Testing", () => {
+  it("should show info in info route", async () => {
+    const res = await supertest(app).get("/info")
+    expect(res.statusCode).toEqual(200);
+    console.log(res.body)
+    expect(res.body).toHaveProperty("endpoints");
+  });
+});
 describe("Bookings Testing", () => {
   let authToken: string;
 
