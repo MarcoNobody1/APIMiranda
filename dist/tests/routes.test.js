@@ -228,3 +228,81 @@ describe("Rooms Testing", () => {
         expect(res.body[0].room_name.room_description).toEqual("This is a modified room");
     }));
 });
+describe("Contacts Testing", () => {
+    let authToken;
+    beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app).post("/login").send({
+            user: "admin",
+            password: "admin",
+        });
+        authToken = res.body.token;
+    }));
+    it("should enter Contacts", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app).get("/contacts").set("token", authToken);
+        expect(res.statusCode).toEqual(200);
+    }));
+    it("should return all contacts with GET method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app).get("/contacts").set("token", authToken);
+        expect(res.body[0]).toHaveProperty("offer_price");
+    }));
+    it("should add one contact with POST method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res1 = yield (0, supertest_1.default)(app_1.app).get("/contacts").set("token", authToken);
+        const initialLength = res1.body.length;
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .post("/contacts")
+            .set("token", authToken)
+            .send({
+            date: {
+                id: "94655",
+                send_date: "2023-01-16",
+            },
+            customer: {
+                name: "Angel Samuel",
+                email: "angel@samuel.com",
+                phone: "62457895332",
+            },
+            subject: "New Contact",
+            comment: "This is a NEW contact",
+            archived: true,
+        });
+        expect(res.body).toEqual(`Your contact is number ${initialLength + 1}`);
+    }));
+    it("should return one contact with GET method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .get("/contacts/12345")
+            .set("token", authToken);
+        expect(res.body[0].date.id).toEqual("12345");
+    }));
+    it("should return deleted booking with DELETE method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .delete("/contacts/12345")
+            .set("token", authToken);
+        expect(res.body[0].date.id).toEqual("12345");
+    }));
+    it("should return updated room with PUT method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const prev_res = yield (0, supertest_1.default)(app_1.app)
+            .get("/contacts/12345")
+            .set("token", authToken);
+        const prev_comment = prev_res.body[0].comment;
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .put("/contacts/12345")
+            .set("token", authToken)
+            .send({
+            date: {
+                id: "12345",
+                send_date: "2023-01-16",
+            },
+            customer: {
+                name: "Angel Samuel",
+                email: "angel@samuel.com",
+                phone: "62457895332",
+            },
+            subject: "Updated Contact",
+            comment: "This is a modified contact",
+            archived: true,
+        });
+        const new_comment = res.body[0].comment;
+        expect(prev_comment).not.toEqual(new_comment);
+        expect(res.body[0].comment).toEqual("This is a modified contact");
+    }));
+});
