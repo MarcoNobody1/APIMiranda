@@ -47,9 +47,9 @@ contactsController.put("/:id", async (req: Request,res: Response) => {
 contactsController.post("/", async (req: Request<ContactInterface>, res: Response) => {
     try {
       const result = await contactService.postNewContact(req.body);
-      res.status(200).send(`Your contact is number ${result}`);
+      res.status(200).json(`Your contact is number ${result}`);
     } catch (error) {
-      res.status(500).send(`${error}`);
+      res.status(500).json(`${error}`);
     }
   }
 );

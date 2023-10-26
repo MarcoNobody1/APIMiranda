@@ -47,7 +47,7 @@ usersController.put("/:id", async (req: Request,res: Response) => {
 usersController.post("/", async (req: Request<UserInterface>, res: Response) => {
     try {
       const result = await userService.postNewUser(req.body);
-      res.status(200).send(`Your user is number ${result}`);
+      res.status(200).json(`Your user is number ${result}`);
     } catch (error) {
       res.status(500).json(`${error}`);
     }

@@ -47,7 +47,7 @@ roomsController.put("/:id", async (req: Request,res: Response) => {
 roomsController.post("/", async (req: Request<RoomInterface>, res: Response) => {
     try {
       const result = await RoomService.postNewRoom(req.body);
-      res.status(200).send(`Your Room is number ${result}`);
+      res.status(200).json(`Your Room is number ${result}`);
     } catch (error) {
       res.status(500).json(`${error}`);
     }
