@@ -9,6 +9,6 @@ export default function authMiddleware(req: Request & {headers: Partial<RequestH
     next();
 
   } catch (error) {
-    res.status(404).send(`${error}`)
+    res.status(404).json(`${error}`)
   }
 }

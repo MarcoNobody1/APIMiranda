@@ -19,7 +19,7 @@ roomsController.get("/:id", async (req: Request, res: Response) => {
         res.send(result);
 
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -29,7 +29,7 @@ roomsController.delete("/:id", async (req: Request, res: Response) => {
       const result = await RoomService.delete(req.params.id);
       res.status(200).send(result);
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -39,7 +39,7 @@ roomsController.put("/:id", async (req: Request,res: Response) => {
       const result = await RoomService.updateRoom(req.params.id, req.body);
       res.status(200).send(result);
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -49,7 +49,7 @@ roomsController.post("/", async (req: Request<RoomInterface>, res: Response) => 
       const result = await RoomService.postNewRoom(req.body);
       res.status(200).send(`Your Room is number ${result}`);
     } catch (error) {
-      res.status(500).send(`${error}`);
+      res.status(500).json(`${error}`);
     }
   }
 );

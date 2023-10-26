@@ -10,7 +10,7 @@ try {
     const result = await authService.login(username, password);
     res.send(result)
 } catch (error) {
-    res.send(`${error}`)
+    res.status(400).json(`${error}`)
 }
 
 })

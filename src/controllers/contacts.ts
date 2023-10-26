@@ -19,7 +19,7 @@ contactsController.get("/:id", async (req: Request, res: Response) => {
         res.send(result);
 
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -29,7 +29,7 @@ contactsController.delete("/:id", async (req: Request, res: Response) => {
       const result = await contactService.delete(parseInt(req.params.id));
       res.status(200).send(result);
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -39,7 +39,7 @@ contactsController.put("/:id", async (req: Request,res: Response) => {
       const result = await contactService.updateContact(parseInt(req.params.id), req.body);
       res.status(200).send(result);
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );

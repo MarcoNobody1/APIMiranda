@@ -19,7 +19,7 @@ bookingsController.get("/:id", async (req: Request, res: Response) => {
         res.send(result);
 
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -29,7 +29,7 @@ bookingsController.delete("/:id", async (req: Request, res: Response) => {
       const result = await bookingService.delete(parseInt(req.params.id));
       res.status(200).send(result);
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -39,7 +39,7 @@ bookingsController.put("/:id", async (req: Request,res: Response) => {
       const result = await bookingService.updateBooking(parseInt(req.params.id), req.body);
       res.status(200).send(result);
     } catch (error) {
-      res.status(400).send(`${error}`);
+      res.status(400).json(`${error}`);
     }
   }
 );
@@ -47,9 +47,9 @@ bookingsController.put("/:id", async (req: Request,res: Response) => {
 bookingsController.post("/", async (req: Request<BookingInterface>, res: Response) => {
     try {
       const result = await bookingService.postNewBooking(req.body);
-      res.status(200).send(`Your booking is number ${result}`);
+      res.status(200).json(`Your booking is number ${result}`);
     } catch (error) {
-      res.status(500).send(`${error}`);
+      res.status(500).json(`${error}`);
     }
   }
 );
