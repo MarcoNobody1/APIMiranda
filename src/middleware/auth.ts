@@ -11,8 +11,4 @@ export default function authMiddleware(req: Request & {headers: RequestHeadersIn
   } catch (error) {
     res.status(404).send(`${error}`)
   }
- 
-  
-
-
 }
