@@ -38,6 +38,14 @@ describe("Login Testing", () => {
         expect(res.body).toEqual("Error: You are not authorized.");
     }));
 });
+describe("Info Testing", () => {
+    it("should show info in info route", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app).get("/info");
+        expect(res.statusCode).toEqual(200);
+        console.log(res.body);
+        expect(res.body).toHaveProperty("endpoints");
+    }));
+});
 describe("Bookings Testing", () => {
     let authToken;
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
