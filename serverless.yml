@@ -1,0 +1,12 @@
+service: nodejs-aws-lambda
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: eu-west-1
+functions:
+  app:
+    handler: dist/lambda.handler
+    events:
+      - http: ANY /
+      - http: ANY /{proxy+}
+      
