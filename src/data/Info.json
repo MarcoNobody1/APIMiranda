@@ -1,0 +1,35 @@
+{
+    "name": "Hotel Miranda",
+    "endpoints": {
+        "public":{
+            "/info": "GET",
+            "/login": "POST"
+        },
+        "private":{
+            "/bookings": {
+                "methods": ["GET", "POST"],
+                "subroutes-methods": {
+                    "/id": ["GET", "PUT", "DELETE"]
+                }
+            },
+            "/rooms": {
+                "methods": ["GET", "POST"],
+                "subroutes-methods": {
+                    "/id": ["GET", "PUT", "DELETE"]
+                }
+            },
+            "/contacts": {
+                "methods": ["GET", "POST"],
+                "subroutes-methods": {
+                    "/id": ["GET", "PUT", "DELETE"]
+                }
+            },
+            "/users": {
+                "methods": ["GET", "POST"],
+                "subroutes-methods": {
+                    "/id": ["GET", "PUT", "DELETE"]
+                }
+            }
+        }
+    }
+}
