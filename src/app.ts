@@ -4,6 +4,8 @@ import { bookingsController } from "./controllers/bookings";
 import { roomsController } from "./controllers/rooms";
 import { loginController } from "./controllers/login";
 import authMiddleware from "./middleware/auth";
+import { contactsController } from "./controllers/contacts";
+import { usersController } from "./controllers/users";
 
 export const app = express()
 
@@ -17,5 +19,5 @@ app.use(authMiddleware)
 // private routes
 app.use('/bookings', bookingsController)    
 app.use('/rooms', roomsController)   
-// app.use('/users', usersController)  
-// app.use('/contacts', contactsController)    
+app.use('/users', usersController)
+app.use('/contacts', contactsController)    
