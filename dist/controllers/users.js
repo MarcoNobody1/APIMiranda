@@ -52,7 +52,7 @@ exports.usersController.put("/:id", (req, res) => __awaiter(void 0, void 0, void
 exports.usersController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.postNewUser(req.body);
-        res.status(200).send(`Your user is number ${result}`);
+        res.status(200).json(`Your user is number ${result}`);
     }
     catch (error) {
         res.status(500).json(`${error}`);

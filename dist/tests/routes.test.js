@@ -38,7 +38,7 @@ describe("Login Testing", () => {
         expect(res.body).toEqual("Error: You are not authorized.");
     }));
 });
-describe("Booking Testing", () => {
+describe("Bookings Testing", () => {
     let authToken;
     beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(app_1.app).post("/login").send({
@@ -58,7 +58,10 @@ describe("Booking Testing", () => {
     it("should add one booking with POST method", () => __awaiter(void 0, void 0, void 0, function* () {
         const res1 = yield (0, supertest_1.default)(app_1.app).get("/bookings").set("token", authToken);
         const initialLength = res1.body.length;
-        const res = yield (0, supertest_1.default)(app_1.app).post("/bookings").set("token", authToken).send({
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .post("/bookings")
+            .set("token", authToken)
+            .send({
             guest: {
                 nombre: "Marco",
                 apellidos: "Antonio",
@@ -80,17 +83,26 @@ describe("Booking Testing", () => {
         expect(res.body).toEqual(`Your booking is number ${initialLength + 1}`);
     }));
     it("should return one booking with GET method", () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield (0, supertest_1.default)(app_1.app).get("/bookings/98765").set("token", authToken);
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .get("/bookings/98765")
+            .set("token", authToken);
         expect(res.body[0].guest.id_reserva).toEqual("98765");
     }));
     it("should return deleted booking with DELETE method", () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield (0, supertest_1.default)(app_1.app).delete("/bookings/98765").set("token", authToken);
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .delete("/bookings/98765")
+            .set("token", authToken);
         expect(res.body[0].guest.id_reserva).toEqual("98765");
     }));
     it("should return updated booking with PUT method", () => __awaiter(void 0, void 0, void 0, function* () {
-        const prev_res = yield (0, supertest_1.default)(app_1.app).get("/bookings/98765").set("token", authToken);
+        const prev_res = yield (0, supertest_1.default)(app_1.app)
+            .get("/bookings/98765")
+            .set("token", authToken);
         const prev_description = prev_res.body[0].room.room_description;
-        const res = yield (0, supertest_1.default)(app_1.app).put("/bookings/98765").set("token", authToken).send({
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .put("/bookings/98765")
+            .set("token", authToken)
+            .send({
             guest: {
                 nombre: "Marco",
                 apellidos: "Antonio",
@@ -112,5 +124,107 @@ describe("Booking Testing", () => {
         const new_description = res.body[0].room.room_description;
         expect(prev_description).not.toEqual(new_description);
         expect(res.body[0].room.room_description).toEqual("This is a modified room");
+    }));
+});
+describe("Rooms Testing", () => {
+    let authToken;
+    beforeAll(() => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app).post("/login").send({
+            user: "admin",
+            password: "admin",
+        });
+        authToken = res.body.token;
+    }));
+    it("should enter Rooms", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app).get("/rooms").set("token", authToken);
+        expect(res.statusCode).toEqual(200);
+    }));
+    it("should return all rooms with GET method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app).get("/rooms").set("token", authToken);
+        expect(res.body[0]).toHaveProperty("offer_price");
+    }));
+    it("should add one room with POST method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res1 = yield (0, supertest_1.default)(app_1.app).get("/rooms").set("token", authToken);
+        const initialLength = res1.body.length;
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .post("/rooms")
+            .set("token", authToken)
+            .send({
+            room_name: {
+                id: "1ABCD123",
+                room_photo: "https://www.usatoday.com/gcdn/-mm-/05b227ad5b8ad4e9dcb53af4f31d7fbdb7fa901b/c=0-64-2119-1259/local/-/media/USATODAY/USATODAY/2014/08/13/1407953244000-177513283.jpg",
+                room_number: 13131,
+                room_description: "This is a NEW ROOM",
+            },
+            room_type: "Suite",
+            amenities: [
+                "1/3 Bed Space",
+                "24-Hour Guard",
+                "Free Wifi",
+                "Air Conditioner",
+                "Television",
+                "Towels",
+                "Mini Bar",
+                "Coffee Set",
+                "Nice Views",
+            ],
+            price: 250,
+            offer_price: {
+                isOffer: true,
+                discount: 10,
+            },
+            availability: "available",
+        });
+        expect(res.body).toEqual(`Your Room is number ${initialLength + 1}`);
+    }));
+    it("should return one room with GET method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .get("/rooms/1ABCD123")
+            .set("token", authToken);
+        expect(res.body[0].room_name.id).toEqual("1ABCD123");
+    }));
+    it("should return deleted booking with DELETE method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .delete("/rooms/1ABCD123")
+            .set("token", authToken);
+        expect(res.body[0].room_name.id).toEqual("1ABCD123");
+    }));
+    it("should return updated room with PUT method", () => __awaiter(void 0, void 0, void 0, function* () {
+        const prev_res = yield (0, supertest_1.default)(app_1.app)
+            .get("/rooms/1ABCD123")
+            .set("token", authToken);
+        const prev_description = prev_res.body[0].room_name.room_description;
+        const res = yield (0, supertest_1.default)(app_1.app)
+            .put("/rooms/1ABCD123")
+            .set("token", authToken)
+            .send({
+            room_name: {
+                id: "1ABCD123",
+                room_photo: "test.jpg",
+                room_number: 13,
+                room_description: "This is a modified room",
+            },
+            room_type: "Double Superior",
+            amenities: [
+                "1/3 Bed Space",
+                "24-Hour Guard",
+                "Free Wifi",
+                "Air Conditioner",
+                "Television",
+                "Towels",
+                "Mini Bar",
+                "Coffee Set",
+                "Nice Views",
+            ],
+            price: 250,
+            offer_price: {
+                isOffer: true,
+                discount: 10,
+            },
+            availability: "available",
+        });
+        const new_description = res.body[0].room_name.room_description;
+        expect(prev_description).not.toEqual(new_description);
+        expect(res.body[0].room_name.room_description).toEqual("This is a modified room");
     }));
 });

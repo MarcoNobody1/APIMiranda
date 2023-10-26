@@ -52,7 +52,7 @@ exports.roomsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void
 exports.roomsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield rooms_1.RoomService.postNewRoom(req.body);
-        res.status(200).send(`Your Room is number ${result}`);
+        res.status(200).json(`Your Room is number ${result}`);
     }
     catch (error) {
         res.status(500).json(`${error}`);
