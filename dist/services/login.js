@@ -24,7 +24,7 @@ function login(user, password) {
         if (defaultUser.user !== user || defaultUser.password !== password) {
             throw new Error("Username or Password Incorrect!");
         }
-        return signJWT({ user });
+        return yield signJWT({ user });
     });
 }
 function signJWT(payload) {
