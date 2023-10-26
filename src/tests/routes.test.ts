@@ -224,11 +224,9 @@ describe("Rooms Testing", () => {
       .send({
         room_name: {
           id: "1ABCD123",
-          room_photo:
-            "test.jpg",
+          room_photo: "test.jpg",
           room_number: 13,
-          room_description:
-            "This is a modified room",
+          room_description: "This is a modified room",
         },
         room_type: "Double Superior",
         amenities: [
@@ -255,6 +253,104 @@ describe("Rooms Testing", () => {
     expect(prev_description).not.toEqual(new_description);
     expect(res.body[0].room_name.room_description).toEqual(
       "This is a modified room"
+    );
+  });
+});
+
+describe("Contacts Testing", () => {
+  let authToken: string;
+
+  beforeAll(async () => {
+    const res = await supertest(app).post("/login").send({
+      user: "admin",
+      password: "admin",
+    });
+    authToken = res.body.token;
+  });
+
+  it("should enter Contacts", async () => {
+    const res = await supertest(app).get("/contacts").set("token", authToken);
+    expect(res.statusCode).toEqual(200);
+  });
+
+  it("should return all contacts with GET method", async () => {
+    const res = await supertest(app).get("/contacts").set("token", authToken);
+
+    expect(res.body[0]).toHaveProperty("offer_price");
+  });
+
+  it("should add one contact with POST method", async () => {
+    const res1 = await supertest(app).get("/contacts").set("token", authToken);
+
+    const initialLength = res1.body.length;
+
+    const res = await supertest(app)
+      .post("/contacts")
+      .set("token", authToken)
+      .send({
+        date: {
+          id: "94655",
+          send_date: "2023-01-16",
+        },
+        customer: {
+          name: "Angel Samuel",
+          email: "angel@samuel.com",
+          phone: "62457895332",
+        },
+        subject: "New Contact",
+        comment: "This is a NEW contact",
+        archived: true,
+      });
+
+    expect(res.body).toEqual(`Your contact is number ${initialLength + 1}`);
+  });
+
+  it("should return one contact with GET method", async () => {
+    const res = await supertest(app)
+      .get("/contacts/12345")
+      .set("token", authToken);
+
+    expect(res.body[0].date.id).toEqual("12345");
+  });
+
+  it("should return deleted booking with DELETE method", async () => {
+    const res = await supertest(app)
+      .delete("/contacts/12345")
+      .set("token", authToken);
+
+    expect(res.body[0].date.id).toEqual("12345");
+  });
+
+  it("should return updated room with PUT method", async () => {
+    const prev_res = await supertest(app)
+      .get("/contacts/12345")
+      .set("token", authToken);
+
+    const prev_comment = prev_res.body[0].comment;
+
+    const res = await supertest(app)
+      .put("/contacts/12345")
+      .set("token", authToken)
+      .send({
+        date: {
+          id: "12345",
+          send_date: "2023-01-16",
+        },
+        customer: {
+          name: "Angel Samuel",
+          email: "angel@samuel.com",
+          phone: "62457895332",
+        },
+        subject: "Updated Contact",
+        comment: "This is a modified contact",
+        archived: true,
+      });
+
+    const new_comment = res.body[0].comment;
+
+    expect(prev_comment).not.toEqual(new_comment);
+    expect(res.body[0].comment).toEqual(
+      "This is a modified contact"
     );
   });
 });
