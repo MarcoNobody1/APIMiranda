@@ -21,11 +21,8 @@ function signJWT(payload: { user: string }) {
 }
 
 function verifyJWT(token: string) {
-  jwt.verify(token, secretToken, (err, token) => {
-    if (err) throw new Error("You are not authorized.");
-    return token;
-  });
-
+  const payload = jwt.verify(token, secretToken);
+  return payload;
 }
 
 const authService = {

@@ -9,6 +9,6 @@ export default function authMiddleware(req: Request & {headers: Partial<RequestH
     next();
 
   } catch (error) {
-    res.status(401).json(`${error}`)
+    res.status(401).json({error: true, message: "You're not authorized!"})
   }
 }
