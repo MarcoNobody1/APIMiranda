@@ -21,7 +21,7 @@ describe("Login Testing", () => {
   });
   it("can't go to another route without login ", async () => {
     const res = await supertest(app).get("/bookings");
-    expect(res.statusCode).toEqual(404);
+    expect(res.statusCode).toEqual(401);
     expect(res.body).toEqual("Error: You are not authorized.");
   });
 });
