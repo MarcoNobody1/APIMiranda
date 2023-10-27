@@ -28,7 +28,7 @@ describe("Login Testing", () => {
 
 describe("Info Testing", () => {
   it("should show info in info route", async () => {
-    const res = await supertest(app).get("/info")
+    const res = await supertest(app).get("/")
     expect(res.statusCode).toEqual(200);
     console.log(res.body)
     expect(res.body).toHaveProperty("endpoints");
