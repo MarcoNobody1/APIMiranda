@@ -11,7 +11,7 @@ function authMiddleware(req, res, next) {
         next();
     }
     catch (error) {
-        res.status(404).json(`${error}`);
+        res.status(401).json(`${error}`);
     }
 }
 exports.default = authMiddleware;
