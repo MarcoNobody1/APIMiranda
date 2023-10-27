@@ -7,16 +7,16 @@ export const contactsController = Router();
 contactsController.get("/", async (_req: Request, res: Response) => {
   try {
     const result = await contactService.getAllContacts();
-    res.send(result);
+    res.json(result);
   } catch (error) {
-    res.status(500).send("Error al obtener los mensajes.");
+    res.status(500).json("Error al obtener los mensajes.");
   }
 });
 
 contactsController.get("/:id", async (req: Request, res: Response) => {
     try {
       const result = await contactService.getOneContact(parseInt(req.params.id));
-        res.send(result);
+        res.json(result);
 
     } catch (error) {
       res.status(400).json(`${error}`);
@@ -27,7 +27,7 @@ contactsController.get("/:id", async (req: Request, res: Response) => {
 contactsController.delete("/:id", async (req: Request, res: Response) => {
     try {
       const result = await contactService.delete(parseInt(req.params.id));
-      res.status(200).send(result);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json(`${error}`);
     }
@@ -37,7 +37,7 @@ contactsController.delete("/:id", async (req: Request, res: Response) => {
 contactsController.put("/:id", async (req: Request,res: Response) => {
     try {
       const result = await contactService.updateContact(parseInt(req.params.id), req.body);
-      res.status(200).send(result);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json(`${error}`);
     }

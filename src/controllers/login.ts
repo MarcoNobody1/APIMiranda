@@ -8,7 +8,7 @@ try {
     const username = req.body.user;
     const password = req.body.password;
     const result = await authService.login(username, password);
-    res.send(result)
+    res.json(result)
 } catch (error) {
     res.status(400).json(`${error}`)
 }

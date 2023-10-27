@@ -56,7 +56,7 @@ async function deleteRoom(RoomId: string) {
   return data;
 }
 
-export const RoomService = {
+export const roomService = {
   getAllrooms,
   getOneRoom,
   postNewRoom,

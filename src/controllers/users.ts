@@ -7,7 +7,7 @@ export const usersController = Router();
 usersController.get("/", async (_req: Request, res: Response) => {
   try {
     const result = await userService.getAllUsers();
-    res.send(result);
+    res.json(result);
   } catch (error) {
     res.status(500).json("Error al obtener los mensajes.");
   }
@@ -16,7 +16,7 @@ usersController.get("/", async (_req: Request, res: Response) => {
 usersController.get("/:id", async (req: Request, res: Response) => {
     try {
       const result = await userService.getOneUser(req.params.id);
-        res.send(result);
+        res.json(result);
 
     } catch (error) {
       res.status(400).json(`${error}`);
@@ -27,7 +27,7 @@ usersController.get("/:id", async (req: Request, res: Response) => {
 usersController.delete("/:id", async (req: Request, res: Response) => {
     try {
       const result = await userService.delete(req.params.id);
-      res.status(200).send(result);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json(`${error}`);
     }
@@ -37,7 +37,7 @@ usersController.delete("/:id", async (req: Request, res: Response) => {
 usersController.put("/:id", async (req: Request,res: Response) => {
     try {
       const result = await userService.updateUser(req.params.id, req.body);
-      res.status(200).send(result);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json(`${error}`);
     }

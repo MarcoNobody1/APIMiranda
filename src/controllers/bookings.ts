@@ -7,16 +7,16 @@ export const bookingsController = Router();
 bookingsController.get("/", async (_req: Request, res: Response) => {
   try {
     const result = await bookingService.getAllBookings();
-    res.send(result);
+    res.json(result);
   } catch (error) {
-    res.status(500).send("Error al obtener las reservas.");
+    res.status(500).json("Error al obtener las reservas.");
   }
 });
 
 bookingsController.get("/:id", async (req: Request, res: Response) => {
     try {
       const result = await bookingService.getOneBooking(parseInt(req.params.id));
-        res.send(result);
+        res.json(result);
 
     } catch (error) {
       res.status(400).json(`${error}`);
@@ -27,7 +27,7 @@ bookingsController.get("/:id", async (req: Request, res: Response) => {
 bookingsController.delete("/:id", async (req: Request, res: Response) => {
     try {
       const result = await bookingService.delete(parseInt(req.params.id));
-      res.status(200).send(result);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json(`${error}`);
     }
@@ -37,7 +37,7 @@ bookingsController.delete("/:id", async (req: Request, res: Response) => {
 bookingsController.put("/:id", async (req: Request,res: Response) => {
     try {
       const result = await bookingService.updateBooking(parseInt(req.params.id), req.body);
-      res.status(200).send(result);
+      res.status(200).json(result);
     } catch (error) {
       res.status(400).json(`${error}`);
     }

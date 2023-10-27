@@ -7,6 +7,6 @@ infoController.get("/", async (_req: Request, res: Response) => {
   try {
     await res.json(infoJSON);
   } catch (error) {
-    res.status(400).send("Error al obtener las información.");
+    res.status(400).json("Error al obtener las información.");
   }
 });
