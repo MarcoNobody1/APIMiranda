@@ -21,6 +21,6 @@ exports.infoController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0,
         yield res.json(Info_json_1.default);
     }
     catch (error) {
-        res.status(400).send("Error al obtener las información.");
+        res.status(400).json("Error al obtener las información.");
     }
 }));

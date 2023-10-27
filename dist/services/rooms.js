@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RoomService = exports.Rooms = void 0;
+exports.roomService = exports.Rooms = void 0;
 const rooms_json_1 = __importDefault(require("../data/rooms.json"));
 exports.Rooms = rooms_json_1.default;
 function getAllrooms() {
@@ -64,7 +64,7 @@ function deleteRoom(RoomId) {
         return data;
     });
 }
-exports.RoomService = {
+exports.roomService = {
     getAllrooms,
     getOneRoom,
     postNewRoom,

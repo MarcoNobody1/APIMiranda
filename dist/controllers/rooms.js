@@ -15,17 +15,17 @@ const rooms_1 = require("../services/rooms");
 exports.roomsController = (0, express_1.Router)();
 exports.roomsController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.getAllrooms();
-        res.send(result);
+        const result = yield rooms_1.roomService.getAllrooms();
+        res.json(result);
     }
     catch (error) {
-        res.status(500).send("Error al obtener las reservas.");
+        res.status(500).json("Error al obtener las reservas.");
     }
 }));
 exports.roomsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.getOneRoom(req.params.id);
-        res.send(result);
+        const result = yield rooms_1.roomService.getOneRoom(req.params.id);
+        res.json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -33,8 +33,8 @@ exports.roomsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void
 }));
 exports.roomsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.delete(req.params.id);
-        res.status(200).send(result);
+        const result = yield rooms_1.roomService.delete(req.params.id);
+        res.status(200).json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -42,8 +42,8 @@ exports.roomsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, v
 }));
 exports.roomsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.updateRoom(req.params.id, req.body);
-        res.status(200).send(result);
+        const result = yield rooms_1.roomService.updateRoom(req.params.id, req.body);
+        res.status(200).json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -51,7 +51,7 @@ exports.roomsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void
 }));
 exports.roomsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield rooms_1.RoomService.postNewRoom(req.body);
+        const result = yield rooms_1.roomService.postNewRoom(req.body);
         res.status(200).json(`Your Room is number ${result}`);
     }
     catch (error) {

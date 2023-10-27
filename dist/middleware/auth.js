@@ -11,7 +11,7 @@ function authMiddleware(req, res, next) {
         next();
     }
     catch (error) {
-        res.status(401).json(`${error}`);
+        res.status(401).json({ error: true, message: "You're not authorized!" });
     }
 }
 exports.default = authMiddleware;

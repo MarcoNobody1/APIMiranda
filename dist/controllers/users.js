@@ -16,7 +16,7 @@ exports.usersController = (0, express_1.Router)();
 exports.usersController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.getAllUsers();
-        res.send(result);
+        res.json(result);
     }
     catch (error) {
         res.status(500).json("Error al obtener los mensajes.");
@@ -25,7 +25,7 @@ exports.usersController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0
 exports.usersController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.getOneUser(req.params.id);
-        res.send(result);
+        res.json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -34,7 +34,7 @@ exports.usersController.get("/:id", (req, res) => __awaiter(void 0, void 0, void
 exports.usersController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.delete(req.params.id);
-        res.status(200).send(result);
+        res.status(200).json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -43,7 +43,7 @@ exports.usersController.delete("/:id", (req, res) => __awaiter(void 0, void 0, v
 exports.usersController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.updateUser(req.params.id, req.body);
-        res.status(200).send(result);
+        res.status(200).json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);

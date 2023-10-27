@@ -32,11 +32,8 @@ function signJWT(payload) {
     return { payload, token };
 }
 function verifyJWT(token) {
-    jsonwebtoken_1.default.verify(token, secretToken, (err, token) => {
-        if (err)
-            throw new Error("You are not authorized.");
-        return token;
-    });
+    const payload = jsonwebtoken_1.default.verify(token, secretToken);
+    return payload;
 }
 const authService = {
     login,

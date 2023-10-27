@@ -35,12 +35,12 @@ describe("Login Testing", () => {
     it("can't go to another route without login ", () => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield (0, supertest_1.default)(app_1.app).get("/bookings");
         expect(res.statusCode).toEqual(401);
-        expect(res.body).toEqual("Error: You are not authorized.");
+        expect(res.body.message).toEqual("You're not authorized!");
     }));
 });
 describe("Info Testing", () => {
     it("should show info in info route", () => __awaiter(void 0, void 0, void 0, function* () {
-        const res = yield (0, supertest_1.default)(app_1.app).get("/info");
+        const res = yield (0, supertest_1.default)(app_1.app).get("/");
         expect(res.statusCode).toEqual(200);
         console.log(res.body);
         expect(res.body).toHaveProperty("endpoints");

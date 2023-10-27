@@ -21,7 +21,7 @@ exports.loginController.post("/", (req, res) => __awaiter(void 0, void 0, void 0
         const username = req.body.user;
         const password = req.body.password;
         const result = yield login_1.default.login(username, password);
-        res.send(result);
+        res.json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
