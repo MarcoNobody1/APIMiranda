@@ -15,7 +15,7 @@ app.use(cors())
 app.use(express.json())
 
 // public routes & middleware
-app.use('/info', infoController)
+app.use('/', infoController)
 app.use('/login', loginController)
 app.use(authMiddleware)
 

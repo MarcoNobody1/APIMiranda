@@ -17,7 +17,7 @@ exports.app = (0, express_1.default)();
 exports.app.use((0, cors_1.default)());
 exports.app.use(express_1.default.json());
 // public routes & middleware
-exports.app.use('/info', info_1.infoController);
+exports.app.use('/', info_1.infoController);
 exports.app.use('/login', login_1.loginController);
 exports.app.use(auth_1.default);
 // private routes
