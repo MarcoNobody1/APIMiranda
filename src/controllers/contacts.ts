@@ -9,7 +9,7 @@ contactsController.get("/", async (_req: Request, res: Response) => {
     const result = await contactService.getAllContacts();
     res.json(result);
   } catch (error) {
-    res.status(500).json("Error al obtener los mensajes.");
+    res.status(500).json({error: true, message: "Error al obtener los mensajes."});
   }
 });
 

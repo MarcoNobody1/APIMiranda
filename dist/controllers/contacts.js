@@ -19,7 +19,7 @@ exports.contactsController.get("/", (_req, res) => __awaiter(void 0, void 0, voi
         res.json(result);
     }
     catch (error) {
-        res.status(500).json("Error al obtener los mensajes.");
+        res.status(500).json({ error: true, message: "Error al obtener los mensajes." });
     }
 }));
 exports.contactsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

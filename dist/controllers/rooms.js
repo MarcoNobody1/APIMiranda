@@ -19,7 +19,7 @@ exports.roomsController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0
         res.json(result);
     }
     catch (error) {
-        res.status(500).json("Error al obtener las reservas.");
+        res.status(500).json({ error: true, message: "Error al obtener las reservas." });
     }
 }));
 exports.roomsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

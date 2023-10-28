@@ -9,7 +9,7 @@ bookingsController.get("/", async (_req: Request, res: Response) => {
     const result = await bookingService.getAllBookings();
     res.json(result);
   } catch (error) {
-    res.status(500).json("Error al obtener las reservas.");
+    res.status(500).json({error: true, message:"Error al obtener las reservas."});
   }
 });
 
