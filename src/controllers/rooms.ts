@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { RoomInterface } from "../interfaces/Rooms";
-import { roomService } from "../models/rooms";
+import { roomService } from "../services/rooms";
 
 export const roomsController = Router();   
 
