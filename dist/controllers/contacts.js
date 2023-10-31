@@ -15,17 +15,17 @@ const contacts_1 = require("../services/contacts");
 exports.contactsController = (0, express_1.Router)();
 exports.contactsController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield contacts_1.contactService.getAllContacts();
-        res.json(result);
+        const contacts = yield contacts_1.contactService.getAllContacts();
+        res.json(contacts);
     }
     catch (error) {
-        res.status(500).json({ error: true, message: "Error al obtener los mensajes." });
+        res.status(500).json(`${error}`);
     }
 }));
 exports.contactsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield contacts_1.contactService.getOneContact(parseInt(req.params.id));
-        res.json(result);
+        const contact = yield contacts_1.contactService.getOneContact(req.params.id);
+        res.json(contact);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -33,8 +33,8 @@ exports.contactsController.get("/:id", (req, res) => __awaiter(void 0, void 0, v
 }));
 exports.contactsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield contacts_1.contactService.delete(parseInt(req.params.id));
-        res.status(200).json(result);
+        const deleted = yield contacts_1.contactService.delete(req.params.id);
+        res.json(deleted);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -42,8 +42,8 @@ exports.contactsController.delete("/:id", (req, res) => __awaiter(void 0, void 0
 }));
 exports.contactsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield contacts_1.contactService.updateContact(parseInt(req.params.id), req.body);
-        res.status(200).json(result);
+        const updated = yield contacts_1.contactService.updateContact(req.params.id, req.body);
+        res.json(updated);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -51,8 +51,8 @@ exports.contactsController.put("/:id", (req, res) => __awaiter(void 0, void 0, v
 }));
 exports.contactsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield contacts_1.contactService.postNewContact(req.body);
-        res.status(200).json(`Your contact is number ${result}`);
+        const added = yield contacts_1.contactService.postNewContact(req.body);
+        res.json(added);
     }
     catch (error) {
         res.status(500).json(`${error}`);

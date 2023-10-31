@@ -19,7 +19,7 @@ exports.usersController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0
         res.json(result);
     }
     catch (error) {
-        res.status(500).json({ error: true, message: "Error al obtener los mensajes." });
+        res.status(500).json(`${error}`);
     }
 }));
 exports.usersController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -34,7 +34,7 @@ exports.usersController.get("/:id", (req, res) => __awaiter(void 0, void 0, void
 exports.usersController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.delete(req.params.id);
-        res.status(200).json(result);
+        res.json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -43,7 +43,7 @@ exports.usersController.delete("/:id", (req, res) => __awaiter(void 0, void 0, v
 exports.usersController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.updateUser(req.params.id, req.body);
-        res.status(200).json(result);
+        res.json(result);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -52,7 +52,7 @@ exports.usersController.put("/:id", (req, res) => __awaiter(void 0, void 0, void
 exports.usersController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const result = yield users_1.userService.postNewUser(req.body);
-        res.status(200).json(`Your user is number ${result}`);
+        res.json(result);
     }
     catch (error) {
         res.status(500).json(`${error}`);

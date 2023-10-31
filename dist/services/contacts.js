@@ -8,60 +8,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.contactService = exports.contacts = void 0;
-const Contacts_json_1 = __importDefault(require("../data/Contacts.json"));
-exports.contacts = Contacts_json_1.default;
+exports.contactService = void 0;
+const Contacts_model_1 = require("../models/Contacts.model");
 function getAllContacts() {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const data = yield exports.contacts;
-        if (data.length === 0)
-            throw new Error("No existen reservas.");
-        return data;
+        const contacts = yield Contacts_model_1.Contacts.find();
+        if (contacts.length === 0)
+            throw new Error("Error al obtener los mensajes.");
+        return contacts;
     });
 }
 function getOneContact(contactId) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const data = yield exports.contacts.filter((contact) => contact.date.id === contactId.toString());
-        if (data.length === 0)
-            throw new Error("No hay ninguna reserva con ese id.");
-        return data;
+        const contact = yield Contacts_model_1.Contacts.findById(contactId);
+        if (!contact)
+            throw new Error("No hay ningun mensaje con ese id.");
+        return contact;
     });
 }
 function postNewContact(contact) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const initialLength = exports.contacts.length;
-        const data = yield exports.contacts.push(contact);
-        if (data === initialLength)
-            throw new Error("Tu reserva no se añadio correctamente.");
-        return data;
+        const newContact = yield Contacts_model_1.Contacts.create(contact);
+        if (!newContact)
+            throw new Error("Tu mensaje no se añadio correctamente.");
+        return newContact;
     });
 }
 function updateContact(contactId, update) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const contactIndex = yield exports.contacts.findIndex((contact) => contact.date.id === contactId.toString());
-        if (contactIndex === -1)
-            throw new Error("No puedes modificar una reserva que no existe.");
-        const data = [...exports.contacts];
-        Object.assign(data[contactIndex], update);
-        return data;
+        const updatedContact = yield Contacts_model_1.Contacts.findByIdAndUpdate(contactId, update, {
+            new: true,
+        });
+        if (!updatedContact) {
+            throw new Error("No puedes modificar un mensaje que no existe.");
+        }
+        return updatedContact;
     });
 }
 function deleteContact(contactId) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const contactIndex = yield exports.contacts.findIndex((contact) => contact.date.id === contactId.toString());
-        if (contactIndex === -1)
-            throw new Error("No hay ninguna reserva con ese id.");
-        const data = exports.contacts.splice(contactIndex, 1);
-        return data;
+        const deletedContact = yield Contacts_model_1.Contacts.findByIdAndDelete(contactId);
+        if (!deletedContact) {
+            throw new Error("No hay ningun mensaje con ese id.");
+        }
+        return deletedContact;
     });
 }
 exports.contactService = {
