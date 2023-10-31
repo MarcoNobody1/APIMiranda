@@ -1,21 +1,21 @@
 import { Request, Response, Router } from "express";
 import { BookingInterface } from "../interfaces/Bookings";
-import { Bookings } from "../models/bookings";
+import { bookingService } from "../services/bookings";
 
 export const bookingsController = Router();   
 
 bookingsController.get("/", async (_req: Request, res: Response) => {
   try {
-    const bookings = await Bookings.find();
+    const bookings = await bookingService.getAllBookings();
     res.json(bookings);
   } catch (error) {
-    res.status(500).json({error: true, message:"Error al obtener las reservas."});
+    res.status(500).json(`${error}`);
   }
 });
 
 bookingsController.get("/:id", async (req: Request, res: Response) => {
     try {
-      const booking = await Bookings.findById(parseInt(req.params.id));
+      const booking = await bookingService.getOneBooking(req.params.id);
         res.json(booking);
 
     } catch (error) {
@@ -26,8 +26,8 @@ bookingsController.get("/:id", async (req: Request, res: Response) => {
 
 bookingsController.delete("/:id", async (req: Request, res: Response) => {
     try {
-      const deleted = await Bookings.findByIdAndDelete(parseInt(req.params.id));
-      res.status(200).json(deleted);
+      const deleted = await bookingService.delete(req.params.id);
+      res.json(deleted);
     } catch (error) {
       res.status(400).json(`${error}`);
     }
@@ -36,8 +36,8 @@ bookingsController.delete("/:id", async (req: Request, res: Response) => {
 
 bookingsController.put("/:id", async (req: Request,res: Response) => {
     try {
-      const updated = await Bookings.findOneAndUpdate({id: parseInt(req.params.id)}, req.body);
-      res.status(200).json(updated);
+      const updated = await bookingService.updateBooking(req.params.id, req.body);
+      res.json(updated);
     } catch (error) {
       res.status(400).json(`${error}`);
     }
@@ -46,8 +46,8 @@ bookingsController.put("/:id", async (req: Request,res: Response) => {
 
 bookingsController.post("/", async (req: Request<BookingInterface>, res: Response) => {
     try {
-      const added = await Bookings.create(req.body);
-      res.status(200).json(added);
+      const added = await bookingService.postNewBooking(req.body);
+      res.json(added);
     } catch (error) {
       res.status(500).json(`${error}`);
     }
