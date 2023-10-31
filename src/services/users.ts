@@ -1,60 +1,49 @@
-import usersData from "../data/Users.json";
-import { UserInterface } from "../models/Users.model";
-
-export const users = usersData as UserInterface[];
+import { UserInterface } from "../interfaces/Users";
+import { Users } from "../models/Users.model";
 
 async function getAllUsers() {
-  //logica futura en DB.
-  const data = await users;
-  if (data.length === 0) throw new Error("No existen reservas.");
-  return data;
+  const users = await Users.find();
+  if (users.length === 0) throw new Error("Error al obtener los usuarios.");
+  return users;
 }
 
 async function getOneUser(userId: string) {
-  //logica futura en DB.
-  const data = await users.filter(
-    (user) => user.name.id === userId
-  );
-  if (data.length === 0) throw new Error("No hay ninguna reserva con ese id.");
-  return data;
+  const user = await Users.findById(userId);
+  if (!user) throw new Error("No hay ningun usuario con ese id.");
+  return user;
 }
 
-async function postNewUser(user: UserInterface) {
-  //logica futura en DB.
-  const initialLength = users.length;
-  const data = await users.push(user);
-  if(data === initialLength) throw new Error("Tu reserva no se añadio correctamente.")
-  return data;
+async function postNewUser(User: UserInterface) {
+  const newUser = await Users.create(User);
+  if (!newUser) throw new Error("Tu usuario no se añadio correctamente.");
+  return newUser;
 }
 
 async function updateUser(
   userId: string,
   update: Partial<UserInterface>
 ) {
-  //logica futura en DB.
-  const userIndex = await users.findIndex(
-    (user) => user.name.id === userId
-  );
+  const updatedUser = await Users.findByIdAndUpdate(userId, update, {
+    new: true,
+  });
 
-  if (userIndex === -1) throw new Error("No puedes modificar una reserva que no existe.")
-  const data = [...users];
-  Object.assign(data[userIndex], update);
-  return data;
+  if (!updatedUser) {
+    throw new Error("No puedes modificar un usuario que no existe.");
+  }
 
+  return updatedUser;
 }
 
 async function deleteUser(userId: string) {
-  //logica futura en DB.
+  const deletedUser = await Users.findByIdAndDelete(userId);
 
-  const userIndex = await users.findIndex(
-    (user) => user.name.id === userId
-  );
+  if (!deletedUser) {
+    throw new Error("No hay ningun usuario con ese id.");
+  }
 
-  if (userIndex === -1) throw new Error("No hay ninguna reserva con ese id.");
-
-  const data = users.splice(userIndex, 1);
-  return data;
+  return deletedUser;
 }
+
 
 export const userService = {
   getAllUsers,
