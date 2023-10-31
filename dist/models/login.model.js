@@ -12,18 +12,32 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginController = void 0;
-const express_1 = require("express");
-const login_1 = __importDefault(require("../services/login"));
-exports.loginController = (0, express_1.Router)();
-exports.loginController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const username = req.body.user;
-        const password = req.body.password;
-        const result = yield login_1.default.login(username, password);
-        res.json(result);
-    }
-    catch (error) {
-        res.status(400).json(`${error}`);
-    }
-}));
+const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+require("dotenv/config");
+const defaultUser = {
+    user: "admin",
+    password: "admin",
+};
+const secretToken = process.env.SECRET_TOKEN || "";
+function login(user, password) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (defaultUser.user !== user || defaultUser.password !== password) {
+            throw new Error("Username or Password Incorrect!");
+        }
+        return yield signJWT({ user });
+    });
+}
+function signJWT(payload) {
+    const token = jsonwebtoken_1.default.sign(payload, secretToken, { expiresIn: "1h" });
+    return { payload, token };
+}
+function verifyJWT(token) {
+    const payload = jsonwebtoken_1.default.verify(token, secretToken);
+    return payload;
+}
+const authService = {
+    login,
+    signJWT,
+    verifyJWT,
+};
+exports.default = authService;

@@ -11,21 +11,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookingsController = void 0;
 const express_1 = require("express");
-const bookings_1 = require("../models/bookings");
+const bookings_1 = require("../services/bookings");
 exports.bookingsController = (0, express_1.Router)();
 exports.bookingsController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield bookings_1.bookingService.getAllBookings();
-        res.json(result);
+        const bookings = yield bookings_1.bookingService.getAllBookings();
+        res.json(bookings);
     }
     catch (error) {
-        res.status(500).json({ error: true, message: "Error al obtener las reservas." });
+        res.status(500).json(`${error}`);
     }
 }));
 exports.bookingsController.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield bookings_1.bookingService.getOneBooking(parseInt(req.params.id));
-        res.json(result);
+        const booking = yield bookings_1.bookingService.getOneBooking(req.params.id);
+        res.json(booking);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -33,8 +33,8 @@ exports.bookingsController.get("/:id", (req, res) => __awaiter(void 0, void 0, v
 }));
 exports.bookingsController.delete("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield bookings_1.bookingService.delete(parseInt(req.params.id));
-        res.status(200).json(result);
+        const deleted = yield bookings_1.bookingService.delete(req.params.id);
+        res.json(deleted);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -42,8 +42,8 @@ exports.bookingsController.delete("/:id", (req, res) => __awaiter(void 0, void 0
 }));
 exports.bookingsController.put("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield bookings_1.bookingService.updateBooking(parseInt(req.params.id), req.body);
-        res.status(200).json(result);
+        const updated = yield bookings_1.bookingService.updateBooking(req.params.id, req.body);
+        res.json(updated);
     }
     catch (error) {
         res.status(400).json(`${error}`);
@@ -51,8 +51,8 @@ exports.bookingsController.put("/:id", (req, res) => __awaiter(void 0, void 0, v
 }));
 exports.bookingsController.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const result = yield bookings_1.bookingService.postNewBooking(req.body);
-        res.status(200).json(`Your booking is number ${result}`);
+        const added = yield bookings_1.bookingService.postNewBooking(req.body);
+        res.json(added);
     }
     catch (error) {
         res.status(500).json(`${error}`);
