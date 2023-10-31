@@ -2,26 +2,28 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { BookingInterface } from "../interfaces/Bookings";
 
-
 const bookingsSchema = new Schema<BookingInterface>({
   guest: {
-    nombre: String,
-    apellidos: String,
-    id_reserva: String,
+    nombre: { type: String, required: true },
+    apellidos: { type: String, required: true },
+    id_reserva: { type: String, required: true },
   },
-  order_date: String,
-  check_in: String,
-  check_out: String,
-  special_request: String,
+  order_date: { type: String, required: true },
+  check_in: { type: String, required: true },
+  check_out: { type: String, required: true },
+  special_request: { type: String, required: true },
   room: {
-    id: String,
-    room_type: String,
-    room_number: String,
-    price: Number,
-    amenities: [String],
-    room_description: String,
+    id: { type: String, required: true },
+    room_type: { type: String, required: true },
+    room_number: { type: String, required: true },
+    price: { type: Number, required: true },
+    amenities: { type: [String], required: true },
+    room_description: { type: String, required: true },
   },
-  status: String,
+  status: { type: String, required: true },
 });
 
-export const Bookings = mongoose.model("Bookings", bookingsSchema);
+export const Bookings = mongoose.model<BookingInterface>(
+  "Bookings",
+  bookingsSchema
+);
