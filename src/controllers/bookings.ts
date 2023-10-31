@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
-import { BookingInterface } from "../models/Bookings";
-import { bookingService } from "../services/bookings";
+import { BookingInterface } from "../interfaces/Bookings";
+import { bookingService } from "../models/bookings";
 
 export const bookingsController = Router();   
 

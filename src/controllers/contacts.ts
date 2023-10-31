@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
-import { ContactInterface } from "../models/Contacts";
-import { contactService } from "../services/contacts";
+import { ContactInterface } from "../interfaces/Contacts";
+import { contactService } from "../models/contacts";
 
 export const contactsController = Router();   
 

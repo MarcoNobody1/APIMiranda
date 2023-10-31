@@ -1,5 +1,5 @@
 import {  Request, Response, Router } from "express";
-import authService from "../services/login";
+import authService from "../models/login";
 
 export const loginController = Router(); 
 

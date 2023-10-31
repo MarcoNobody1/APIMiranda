@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.roomsController = void 0;
 const express_1 = require("express");
-const rooms_1 = require("../services/rooms");
+const rooms_1 = require("../models/rooms");
 exports.roomsController = (0, express_1.Router)();
 exports.roomsController.get("/", (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
