@@ -1,65 +1,22 @@
-import RoomsData from "../data/rooms.json";
+import mongoose from "mongoose";
+const { Schema } = mongoose;
 import { RoomInterface } from "../interfaces/Rooms";
 
-export const Rooms = RoomsData as RoomInterface[];
+const roomsSchema = new Schema<RoomInterface>({
+  room_name: {
+    id: { type: String, required: true },
+    room_photo: { type: String, required: true },
+    room_number: { type: Number, required: true },
+    room_description: { type: String, required: true },
+  },
+  room_type: { type: String, required: true },
+  amenities: { type: [String], required: true },
+  price: { type: Number, required: true },
+  offer_price: {
+    isOffer: { type: Boolean, required: true },
+    discount: { type: Number, required: true },
+  },
+  availability: { type: String, required: true },
+});
 
-async function getAllrooms() {
-  //logica futura en DB.
-  const data = await Rooms;
-  if (data.length === 0) throw new Error("No existen reservas.");
-  return data;
-}
-
-async function getOneRoom(RoomId: string) {
-  //logica futura en DB.
-  const data = await Rooms.filter(
-    (Room) => Room.room_name.id === RoomId
-  );
-  if (data.length === 0) throw new Error("No hay ninguna reserva con ese id.");
-  return data;
-}
-
-async function postNewRoom(Room: RoomInterface) {
-  //logica futura en DB.
-  const initialLength = Rooms.length;
-  const data = await Rooms.push(Room);
-  if(data === initialLength) throw new Error("Tu reserva no se añadio correctamente.")
-  return data;
-}
-
-async function updateRoom(
-  RoomId: string,
-  update: Partial<RoomInterface>
-) {
-  //logica futura en DB.
-  const RoomIndex = await Rooms.findIndex(
-    (Room) => Room.room_name.id === RoomId
-  );
-
-  if (RoomIndex === -1) throw new Error("No puedes modificar una reserva que no existe.")
-  const data = [...Rooms];
-  Object.assign(data[RoomIndex], update);
-  return data;
-
-}
-
-async function deleteRoom(RoomId: string) {
-  //logica futura en DB.
-
-  const RoomIndex = await Rooms.findIndex(
-    (Room) => Room.room_name.id === RoomId
-  );
-
-  if (RoomIndex === -1) throw new Error("No hay ninguna reserva con ese id.");
-
-  const data = Rooms.splice(RoomIndex, 1);
-  return data;
-}
-
-export const roomService = {
-  getAllrooms,
-  getOneRoom,
-  postNewRoom,
-  updateRoom,
-  delete: deleteRoom,
-};
+export const Rooms = mongoose.model<RoomInterface>("Rooms", roomsSchema);
