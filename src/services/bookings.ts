@@ -1,59 +1,47 @@
-import bookingsData from "../data/Bookings.json";
-import { BookingInterface } from "../models/Bookings";
-
-export const bookings = bookingsData as BookingInterface[];
+import { BookingInterface } from "../interfaces/Bookings";
+import { Bookings } from "../models/Bookings.model";
 
 async function getAllBookings() {
-  //logica futura en DB.
-  const data = await bookings;
-  if (data.length === 0) throw new Error("No existen reservas.");
-  return data;
+  const bookings = await Bookings.find();
+  if (bookings.length === 0) throw new Error("Error al obtener las reservas.");
+  return bookings;
 }
 
-async function getOneBooking(bookingId: number) {
-  //logica futura en DB.
-  const data = await bookings.filter(
-    (booking) => booking.guest.id_reserva === bookingId.toString()
-  );
-  if (data.length === 0) throw new Error("No hay ninguna reserva con ese id.");
-  return data;
+async function getOneBooking(bookingId: string) {
+  const booking = await Bookings.findById(bookingId);
+  if (!booking) throw new Error("No hay ninguna reserva con ese id.");
+  return booking;
 }
 
 async function postNewBooking(booking: BookingInterface) {
-  //logica futura en DB.
-  const initialLength = bookings.length;
-  const data = await bookings.push(booking);
-  if(data === initialLength) throw new Error("Tu reserva no se añadio correctamente.")
-  return data;
+  const newBooking = await Bookings.create(booking);
+  if (!newBooking) throw new Error("Tu reserva no se añadio correctamente.");
+  return newBooking;
 }
 
 async function updateBooking(
-  bookingId: number,
+  bookingId: string,
   update: Partial<BookingInterface>
 ) {
-  //logica futura en DB.
-  const bookingIndex = await bookings.findIndex(
-    (booking) => booking.guest.id_reserva === bookingId.toString()
-  );
+  const updatedBooking = await Bookings.findByIdAndUpdate(bookingId, update, {
+    new: true,
+  });
 
-  if (bookingIndex === -1) throw new Error("No puedes modificar una reserva que no existe.")
-  const data = [...bookings];
-  Object.assign(data[bookingIndex], update);
-  return data;
+  if (!updatedBooking) {
+    throw new Error("No puedes modificar una reserva que no existe.");
+  }
 
+  return updatedBooking;
 }
 
-async function deleteBooking(bookingId: number) {
-  //logica futura en DB.
+async function deleteBooking(bookingId: string) {
+  const deletedBooking = await Bookings.findByIdAndDelete(bookingId);
 
-  const bookingIndex = await bookings.findIndex(
-    (booking) => booking.guest.id_reserva === bookingId.toString()
-  );
+  if (!deletedBooking) {
+    throw new Error("No hay ninguna reserva con ese id.");
+  }
 
-  if (bookingIndex === -1) throw new Error("No hay ninguna reserva con ese id.");
-
-  const data = bookings.splice(bookingIndex, 1);
-  return data;
+  return deletedBooking;
 }
 
 export const bookingService = {

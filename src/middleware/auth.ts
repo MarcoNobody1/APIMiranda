@@ -1,4 +1,4 @@
-import { RequestHeadersInterface } from '../models/RequestHeaders';
+import { RequestHeadersInterface } from '../interfaces/RequestHeaders';
 import authService from '../services/login'
 import { NextFunction, Request, Response } from 'express'
 

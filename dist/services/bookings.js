@@ -8,60 +8,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.bookingService = exports.bookings = void 0;
-const Bookings_json_1 = __importDefault(require("../data/Bookings.json"));
-exports.bookings = Bookings_json_1.default;
+exports.bookingService = void 0;
+const Bookings_model_1 = require("../models/Bookings.model");
 function getAllBookings() {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const data = yield exports.bookings;
-        if (data.length === 0)
-            throw new Error("No existen reservas.");
-        return data;
+        const bookings = yield Bookings_model_1.Bookings.find();
+        if (bookings.length === 0)
+            throw new Error("Error al obtener las reservas.");
+        return bookings;
     });
 }
 function getOneBooking(bookingId) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const data = yield exports.bookings.filter((booking) => booking.guest.id_reserva === bookingId.toString());
-        if (data.length === 0)
+        const booking = yield Bookings_model_1.Bookings.findById(bookingId);
+        if (!booking)
             throw new Error("No hay ninguna reserva con ese id.");
-        return data;
+        return booking;
     });
 }
 function postNewBooking(booking) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const initialLength = exports.bookings.length;
-        const data = yield exports.bookings.push(booking);
-        if (data === initialLength)
+        const newBooking = yield Bookings_model_1.Bookings.create(booking);
+        if (!newBooking)
             throw new Error("Tu reserva no se añadio correctamente.");
-        return data;
+        return newBooking;
     });
 }
 function updateBooking(bookingId, update) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const bookingIndex = yield exports.bookings.findIndex((booking) => booking.guest.id_reserva === bookingId.toString());
-        if (bookingIndex === -1)
+        const updatedBooking = yield Bookings_model_1.Bookings.findByIdAndUpdate(bookingId, update, {
+            new: true,
+        });
+        if (!updatedBooking) {
             throw new Error("No puedes modificar una reserva que no existe.");
-        const data = [...exports.bookings];
-        Object.assign(data[bookingIndex], update);
-        return data;
+        }
+        return updatedBooking;
     });
 }
 function deleteBooking(bookingId) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const bookingIndex = yield exports.bookings.findIndex((booking) => booking.guest.id_reserva === bookingId.toString());
-        if (bookingIndex === -1)
+        const deletedBooking = yield Bookings_model_1.Bookings.findByIdAndDelete(bookingId);
+        if (!deletedBooking) {
             throw new Error("No hay ninguna reserva con ese id.");
-        const data = exports.bookings.splice(bookingIndex, 1);
-        return data;
+        }
+        return deletedBooking;
     });
 }
 exports.bookingService = {

@@ -8,60 +8,51 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.userService = exports.users = void 0;
-const Users_json_1 = __importDefault(require("../data/Users.json"));
-exports.users = Users_json_1.default;
+exports.userService = void 0;
+const Users_model_1 = require("../models/Users.model");
 function getAllUsers() {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const data = yield exports.users;
-        if (data.length === 0)
-            throw new Error("No existen reservas.");
-        return data;
+        const users = yield Users_model_1.Users.find();
+        if (users.length === 0)
+            throw new Error("Error al obtener los usuarios.");
+        return users;
     });
 }
 function getOneUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const data = yield exports.users.filter((user) => user.name.id === userId);
-        if (data.length === 0)
-            throw new Error("No hay ninguna reserva con ese id.");
-        return data;
+        const user = yield Users_model_1.Users.findById(userId);
+        if (!user)
+            throw new Error("No hay ningun usuario con ese id.");
+        return user;
     });
 }
-function postNewUser(user) {
+function postNewUser(User) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const initialLength = exports.users.length;
-        const data = yield exports.users.push(user);
-        if (data === initialLength)
-            throw new Error("Tu reserva no se añadio correctamente.");
-        return data;
+        const newUser = yield Users_model_1.Users.create(User);
+        if (!newUser)
+            throw new Error("Tu usuario no se añadio correctamente.");
+        return newUser;
     });
 }
 function updateUser(userId, update) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const userIndex = yield exports.users.findIndex((user) => user.name.id === userId);
-        if (userIndex === -1)
-            throw new Error("No puedes modificar una reserva que no existe.");
-        const data = [...exports.users];
-        Object.assign(data[userIndex], update);
-        return data;
+        const updatedUser = yield Users_model_1.Users.findByIdAndUpdate(userId, update, {
+            new: true,
+        });
+        if (!updatedUser) {
+            throw new Error("No puedes modificar un usuario que no existe.");
+        }
+        return updatedUser;
     });
 }
 function deleteUser(userId) {
     return __awaiter(this, void 0, void 0, function* () {
-        //logica futura en DB.
-        const userIndex = yield exports.users.findIndex((user) => user.name.id === userId);
-        if (userIndex === -1)
-            throw new Error("No hay ninguna reserva con ese id.");
-        const data = exports.users.splice(userIndex, 1);
-        return data;
+        const deletedUser = yield Users_model_1.Users.findByIdAndDelete(userId);
+        if (!deletedUser) {
+            throw new Error("No hay ningun usuario con ese id.");
+        }
+        return deletedUser;
     });
 }
 exports.userService = {

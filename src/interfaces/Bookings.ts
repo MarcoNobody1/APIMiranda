@@ -9,6 +9,7 @@ export interface BookingInterface {
   check_out: string;
   special_request: string;
   room: {
+    id: string,
     room_type: string;
     room_number: string;
     price: number;
