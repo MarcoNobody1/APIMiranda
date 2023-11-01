@@ -6,6 +6,7 @@ import { faker } from "@faker-js/faker";
 import { BookingInterface } from "./src/interfaces/Bookings";
 import { RoomInterface } from "./src/interfaces/Rooms";
 import { ContactInterface } from "./src/interfaces/Contacts";
+import { UserInterface } from "./src/interfaces/Users";
 
 const ITERATIONS: number = 10;
 
@@ -119,22 +120,29 @@ for (let i = 0; i < ITERATIONS; i++) {
 
 for (let i = 0; i < ITERATIONS; i++) {
     
-    const contactData: ContactInterface = {
-      date: {
-        id: faker.string.uuid(),
-        send_date: faker.date
-        .between({ from: "2020-01-01", to: "2021-01-01" })
+    const userData: UserInterface = {
+        name: {
+          photo: faker.image.avatar(),
+          username: faker.internet.userName(),
+          id: faker.string.uuid(),
+          employee_position: faker.helpers.arrayElement([
+            "Room Service",
+            "Receptionist",
+            "Manager",
+          ]),
+          email: faker.internet.email({provider: 'mirandahotel.com', allowSpecialCharacters: false }),
+          password_hash: faker.internet.password({ length: 20 }),
+        },
+        start_date: faker.date
+        .between({ from: "2023-11-01", to: "2023-12-31" })
         .toString(),
-      },
-      customer: {
-        name: faker.person.fullName(),
-        email: faker.internet.email({provider: 'anymail.com', allowSpecialCharacters: false }),
-        phone: faker.phone.number(),
-      },
-      subject: faker.lorem.sentence({ min: 3, max: 8 }),
-      comment: faker.lorem.sentences({ min: 1, max: 3 }),
-      archived: faker.datatype.boolean(),
-    };
+        job_description: faker.person.jobDescriptor(),
+        contact: faker.phone.number(),
+        activity: faker.helpers.arrayElement([
+            "active",
+            "inactive",
+          ]),
+      };
   
-    await Contacts.create(contactData);
+    await Users.create(userData);
   }
