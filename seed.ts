@@ -5,6 +5,7 @@ import { Users } from "./src/models/Users.model";
 import { faker } from "@faker-js/faker";
 import { BookingInterface } from "./src/interfaces/Bookings";
 import { RoomInterface } from "./src/interfaces/Rooms";
+import { ContactInterface } from "./src/interfaces/Contacts";
 
 const ITERATIONS: number = 10;
 
@@ -94,3 +95,46 @@ for (let i = 0; i < ITERATIONS; i++) {
   await Bookings.create(bookingData);
 }
 
+for (let i = 0; i < ITERATIONS; i++) {
+    
+  const contactData: ContactInterface = {
+    date: {
+      id: faker.string.uuid(),
+      send_date: faker.date
+      .between({ from: "2020-01-01", to: "2021-01-01" })
+      .toString(),
+    },
+    customer: {
+      name: faker.person.fullName(),
+      email: faker.internet.email({provider: 'anymail.com', allowSpecialCharacters: false }),
+      phone: faker.phone.number(),
+    },
+    subject: faker.lorem.sentence({ min: 3, max: 8 }),
+    comment: faker.lorem.sentences({ min: 1, max: 3 }),
+    archived: faker.datatype.boolean(),
+  };
+
+  await Contacts.create(contactData);
+}
+
+for (let i = 0; i < ITERATIONS; i++) {
+    
+    const contactData: ContactInterface = {
+      date: {
+        id: faker.string.uuid(),
+        send_date: faker.date
+        .between({ from: "2020-01-01", to: "2021-01-01" })
+        .toString(),
+      },
+      customer: {
+        name: faker.person.fullName(),
+        email: faker.internet.email({provider: 'anymail.com', allowSpecialCharacters: false }),
+        phone: faker.phone.number(),
+      },
+      subject: faker.lorem.sentence({ min: 3, max: 8 }),
+      comment: faker.lorem.sentences({ min: 1, max: 3 }),
+      archived: faker.datatype.boolean(),
+    };
+  
+    await Contacts.create(contactData);
+  }
