@@ -53,3 +53,44 @@ for (let i = 0; i < ITERATIONS; i++) {
   rooms.push(room)
 
 }
+
+
+for (let i = 0; i < ITERATIONS; i++) {
+    const index = Math.floor(Math.random() * ITERATIONS);
+    const room = rooms[index];
+
+
+  const bookingData: BookingInterface = {
+    guest: {
+      nombre: faker.person.firstName(),
+      apellidos: faker.person.lastName(),
+      id_reserva: faker.string.uuid(),
+    },
+    order_date: faker.date
+      .between({ from: "2020-01-01", to: "2020-02-01" })
+      .toString(),
+    check_in: faker.date
+      .between({ from: "2020-03-01", to: "2020-03-31" })
+      .toString(),
+    check_out: faker.date
+      .between({ from: "2020-04-01", to: "2020-04-30" })
+      .toString(),
+    special_request: faker.lorem.sentence({ min: 7, max: 25 }),
+    room: {
+      id: room.room_name.id,
+      room_type: room.room_type,
+      room_number:  room.room_name.room_number.toString(),
+      price: room.price,
+      amenities: room.amenities,
+      room_description: room.room_name.room_description,
+    },
+    status: faker.helpers.arrayElement([
+      "Check In",
+      "Check Out",
+      "In Progress",
+    ]),
+  };
+
+  await Bookings.create(bookingData);
+}
+
