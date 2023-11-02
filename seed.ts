@@ -7,19 +7,27 @@ import { Rooms } from './src/models/Rooms.model';
 import { Bookings } from './src/models/Bookings.model';
 import { Contacts } from './src/models/Contacts.model';
 import { Users } from './src/models/Users.model';
+import { ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";
 import "dotenv/config";
 
 const ITERATIONS: number = 10;
-const serverHost: string = process.env.SERVER_URL || "";
+const serverHost: string = (process.argv.includes("atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
 const databaseName: string = process.env.DB_NAME || "";
 
 async function seedDatabase () {
+
+  console.log(serverHost)
 
   try {
 
     await mongoose.connect(serverHost, {
       dbName: databaseName,
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
     });
     console.log("CONNECTED");
 
