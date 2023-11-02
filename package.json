@@ -8,8 +8,7 @@
     "build": "rimraf dist && tsc",
     "deploy": "npm run build && serverless deploy --force",
     "start": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\"",
-    "seedlocal": "ts-node seedLocal.ts",
-    "seed": "ts-node seedAtlas.ts"
+    "seed": "ts-node seed.ts"
   },
   "keywords": [],
   "author": "",
