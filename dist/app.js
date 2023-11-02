@@ -24,7 +24,7 @@ const users_1 = require("./controllers/users");
 const info_1 = require("./controllers/info");
 const mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv/config");
-const serverHost = process.env.SERVER_URL || "";
+const serverHost = (process.argv.includes("--atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
 const databaseName = process.env.DB_NAME || "";
 (() => __awaiter(void 0, void 0, void 0, function* () {
     try {
