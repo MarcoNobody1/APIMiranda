@@ -10,7 +10,7 @@ import { infoController } from "./controllers/info";
 import mongoose from "mongoose";
 import "dotenv/config";
 
-const serverHost: string = process.env.SERVER_URL || "";
+const serverHost: string = (process.argv.includes("--atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
 const databaseName: string = process.env.DB_NAME || "";
 
 (async () => {
