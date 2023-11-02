@@ -92,10 +92,10 @@ describe("Bookings Testing", () => {
 
   it("should return one booking with GET method", async () => {
     const res = await supertest(app)
-      .get("/bookings/65424d644d2c4dd0a9d29ae1")
+      .get("/bookings/654353185dafd1d81bc0f014")
       .set("token", authToken);
 
-    expect(res.body._id).toEqual("65424d644d2c4dd0a9d29ae1");
+    expect(res.body._id).toEqual("654353185dafd1d81bc0f014");
   });
 
   it("should return deleted booking with DELETE method", async () => {
@@ -135,14 +135,41 @@ describe("Bookings Testing", () => {
   it("should return updated booking with PUT method", async () => {
     const randomNum = Math.floor(Math.random() * 25).toString();
 
+    const res0 = await supertest(app)
+    .post("/bookings")
+    .set("token", authToken)
+    .send({
+      guest: {
+        nombre: "Marco",
+        apellidos: "Antonio",
+        id_reserva: "15689",
+      },
+      order_date: "2023-12-13",
+      check_in: "2023-12-25",
+      check_out: "2023-12-31",
+      special_request: "This is a created and deleted booking",
+      room: {
+        id: "1234",
+        room_type: "Suite",
+        room_number: "130",
+        price: 50,
+        amenities: ["Free Wi-Fi", "Non-smoking room", "Ocean view"],
+        room_description: "This is a new booking",
+      },
+      status: "Check In",
+    });
+
+    const idToUpdate = res0.body._id;
+
+
     const prev_res = await supertest(app)
-      .get("/bookings/65424d644d2c4dd0a9d29ae1")
+      .get(`/bookings/${idToUpdate}`)
       .set("token", authToken);
 
     const prev_id = prev_res.body.guest.id_reserva;
 
     const res = await supertest(app)
-      .put("/bookings/65424d644d2c4dd0a9d29ae1")
+      .put(`/bookings/${idToUpdate}`)
       .set("token", authToken)
       .send({
         guest: {
@@ -169,6 +196,10 @@ describe("Bookings Testing", () => {
 
     expect(prev_id).not.toEqual(new_id);
     expect(res.body.guest.id_reserva).toEqual(randomNum);
+
+    await supertest(app)
+      .delete(`/bookings/${idToUpdate}`)
+      .set("token", authToken);
   });
 });
 
@@ -236,10 +267,10 @@ describe("Rooms Testing", () => {
 
   it("should return one room with GET method", async () => {
     const res = await supertest(app)
-      .get("/rooms/65424d644d2c4dd0a9d29ad7")
+      .get("/rooms/654353185dafd1d81bc0f00a")
       .set("token", authToken);
 
-    expect(res.body._id).toEqual("65424d644d2c4dd0a9d29ad7");
+    expect(res.body._id).toEqual("654353185dafd1d81bc0f00a");
   });
 
   it("should return deleted room with DELETE method", async () => {
@@ -285,14 +316,47 @@ describe("Rooms Testing", () => {
   it("should return updated room with PUT method", async () => {
     const randomNum = Math.floor(Math.random() * 25).toString();
 
+    const res0 = await supertest(app)
+      .post("/rooms")
+      .set("token", authToken)
+      .send({
+        room_name: {
+          id: "1ABCD123",
+          room_photo: "example.jpg",
+          room_number: 13131,
+          room_description: "This is a created and deleted room",
+        },
+        room_type: "Suite",
+        amenities: [
+          "1/3 Bed Space",
+          "24-Hour Guard",
+          "Free Wifi",
+          "Air Conditioner",
+          "Television",
+          "Towels",
+          "Mini Bar",
+          "Coffee Set",
+          "Nice Views",
+        ],
+        price: 250,
+        offer_price: {
+          isOffer: true,
+          discount: 10,
+        },
+        availability: "available",
+      });
+
+    const idToUpdate = res0.body._id;
+
+
     const prev_res = await supertest(app)
-      .get("/rooms/65424d644d2c4dd0a9d29ad6")
+      .get(`/rooms/${idToUpdate}`)
       .set("token", authToken);
 
     const prev_description = prev_res.body.room_name.room_description;
 
     const res = await supertest(app)
-      .put("/rooms/65424d644d2c4dd0a9d29ad6")
+      .put(`/rooms/${idToUpdate}`)
       .set("token", authToken)
       .send({
         room_name: {
@@ -325,6 +389,10 @@ describe("Rooms Testing", () => {
 
     expect(prev_description).not.toEqual(new_description);
     expect(res.body.room_name.room_description).toEqual(randomNum);
+
+    await supertest(app)
+      .delete(`/rooms/${idToUpdate}`)
+      .set("token", authToken);
   });
 });
 
@@ -379,10 +447,10 @@ describe("Contacts Testing", () => {
 
   it("should return one contact with GET method", async () => {
     const res = await supertest(app)
-      .get("/contacts/654345405a376b00b3bd1407")
+      .get("/contacts/654353185dafd1d81bc0f01e")
       .set("token", authToken);
 
-    expect(res.body._id).toEqual("654345405a376b00b3bd1407");
+    expect(res.body._id).toEqual("654353185dafd1d81bc0f01e");
   });
 
   it("should return deleted contact with DELETE method", async () => {
@@ -417,14 +485,34 @@ describe("Contacts Testing", () => {
 
     const randomNum = Math.floor(Math.random() * 25).toString();
 
+    const res0 = await supertest(app)
+    .post("/contacts")
+    .set("token", authToken)
+    .send({
+      date: {
+        id: "94655",
+        send_date: "2023-01-16",
+      },
+      customer: {
+        name: "Angel Samuel",
+        email: "angel@samuel.com",
+        phone: "62457895332",
+      },
+      subject: "New Contact",
+      comment: "This is a NEW contact",
+      archived: true,
+    });
+
+  const idToUpdate = res0.body._id;
+
     const prev_res = await supertest(app)
-      .get("/contacts/654345405a376b00b3bd1407")
+      .get(`/contacts/${idToUpdate}`)
       .set("token", authToken);
 
     const prev_comment = prev_res.body.comment;
 
     const res = await supertest(app)
-      .put("/contacts/654345405a376b00b3bd1407")
+      .put(`/contacts/${idToUpdate}`)
       .set("token", authToken)
       .send({
         date: {
@@ -445,6 +533,10 @@ describe("Contacts Testing", () => {
 
     expect(prev_comment).not.toEqual(new_comment);
     expect(res.body.comment).toEqual(randomNum);
+
+    await supertest(app)
+      .delete(`/contacts/${idToUpdate}`)
+      .set("token", authToken)
   });
 });
 
@@ -500,10 +592,10 @@ describe("Users Testing", () => {
 
   it("should return one user with GET method", async () => {
     const res = await supertest(app)
-      .get("/users/6543462681e729c15ef3aec8")
+      .get("/users/654353185dafd1d81bc0f028")
       .set("token", authToken);
 
-    expect(res.body._id).toEqual("6543462681e729c15ef3aec8");
+    expect(res.body._id).toEqual("654353185dafd1d81bc0f028");
   });
 
   it("should return deleted user with DELETE method", async () => {
@@ -540,14 +632,35 @@ describe("Users Testing", () => {
 
     const randomNum = Math.floor(Math.random() * 25).toString();
 
+    const res0 = await supertest(app)
+    .post("/users")
+    .set("token", authToken)
+    .send({
+      name: {
+        photo: "https://robohash.org/employee1?set=set3.jpg",
+        username: "Angel Samuel",
+        id: "121dfeifnIF",
+        employee_position: "Manager",
+        email: "thisIsA@NewUser.com",
+        password_hash: "IDontLikeThis",
+      },
+      start_date: "2023-01-15",
+      job_description:
+        "General hotel management, staff supervision, strategic decision-making.",
+      contact: "+1234567890",
+      activity: "active",
+    });
+
+    const idToUpdate = res0.body._id;
+
     const prev_res = await supertest(app)
-      .get("/users/6543462681e729c15ef3aec8")
+      .get(`/users/${idToUpdate}`)
       .set("token", authToken);
 
     const prev_email = prev_res.body.name.email;
 
     const res = await supertest(app)
-      .put("/users/6543462681e729c15ef3aec8")
+      .put(`/users/${idToUpdate}`)
       .set("token", authToken)
       .send({
         name: {
@@ -569,5 +682,9 @@ describe("Users Testing", () => {
 
     expect(prev_email).not.toEqual(new_email);
     expect(res.body.name.email).toEqual(randomNum);
+
+    await supertest(app)
+      .delete(`/users/${idToUpdate}`)
+      .set("token", authToken);
   });
 });
