@@ -177,7 +177,12 @@ async function seedDatabase () {
     console.log("Users seeded! :)");
   } catch (error) {
     throw new Error(`${error}`);
+  } finally {
+    setTimeout(() => {
+      mongoose.disconnect();
+    }, 2000);
+    
   }
 };
 
-seedDatabase();
+seedDatabase()
