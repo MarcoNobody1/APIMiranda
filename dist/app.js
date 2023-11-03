@@ -22,6 +22,7 @@ const auth_1 = __importDefault(require("./middleware/auth"));
 const contacts_1 = require("./controllers/contacts");
 const users_1 = require("./controllers/users");
 const info_1 = require("./controllers/info");
+const mongodb_1 = require("mongodb");
 const mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv/config");
 const serverHost = (process.argv.includes("--atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
@@ -30,6 +31,11 @@ const databaseName = process.env.DB_NAME || "";
     try {
         yield mongoose_1.default.connect(serverHost, {
             dbName: databaseName,
+            serverApi: {
+                version: mongodb_1.ServerApiVersion.v1,
+                strict: true,
+                deprecationErrors: true,
+            },
         });
         console.log("CONNECTED");
     }
