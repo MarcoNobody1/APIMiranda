@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -27,9 +18,9 @@ const mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv/config");
 const serverHost = (process.argv.includes("--atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
 const databaseName = process.env.DB_NAME || "";
-(() => __awaiter(void 0, void 0, void 0, function* () {
+(async () => {
     try {
-        yield mongoose_1.default.connect(serverHost, {
+        await mongoose_1.default.connect(serverHost, {
             dbName: databaseName,
             serverApi: {
                 version: mongodb_1.ServerApiVersion.v1,
@@ -42,7 +33,7 @@ const databaseName = process.env.DB_NAME || "";
     catch (error) {
         throw new Error(`${error}`);
     }
-}))();
+})();
 exports.app = (0, express_1.default)();
 exports.app.use((0, cors_1.default)());
 exports.app.use(express_1.default.json());
