@@ -1,11 +1,16 @@
-service: nodejs-aws-lambda
+service: API-hotel-miranda
+frameworkVersion: "3"
+
 provider:
   name: aws
   runtime: nodejs18.x
-  region: eu-west-1
+  region: eu-west-1 
+  environment:
+    SECRET_KEY: ${file(.env.json):SECRET_KEY}
+    ATLAS_SERVER: ${file(.env.json):ATLAS_SERVER}
+    
 functions:
-  app:
+  api:
     handler: dist/lambda.handler
     events:
-      - http: ANY /
-      - http: ANY /{proxy+}
+      - httpApi: "*"
