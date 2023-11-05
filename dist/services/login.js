@@ -9,7 +9,7 @@ const defaultUser = {
     user: "admin",
     password: "admin",
 };
-const secretToken = process.env.SECRET_TOKEN || "";
+const secretToken = process.env.SECRET_KEY || "";
 async function login(user, password) {
     if (defaultUser.user !== user || defaultUser.password !== password) {
         throw new Error("Username or Password Incorrect!");
