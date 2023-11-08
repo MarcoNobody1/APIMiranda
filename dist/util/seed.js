@@ -1,15 +1,10 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const faker_1 = require("@faker-js/faker");
 const Rooms_model_1 = require("../models/Rooms.model");
 const Bookings_model_1 = require("../models/Bookings.model");
 const Contacts_model_1 = require("../models/Contacts.model");
 const Users_model_1 = require("../models/Users.model");
-const mongodb_1 = require("mongodb");
-const mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv/config");
 const ITERATIONS = 10;
 const serverHost = (process.argv.includes("atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
@@ -17,14 +12,6 @@ const databaseName = process.env.DB_NAME || "";
 async function seedDatabase() {
     console.log(serverHost);
     try {
-        await mongoose_1.default.connect(serverHost, {
-            dbName: databaseName,
-            serverApi: {
-                version: mongodb_1.ServerApiVersion.v1,
-                strict: true,
-                deprecationErrors: true,
-            },
-        });
         console.log("CONNECTED");
         const rooms = [];
         for (let i = 0; i < ITERATIONS; i++) {
@@ -163,7 +150,6 @@ async function seedDatabase() {
     }
     finally {
         setTimeout(() => {
-            mongoose_1.default.disconnect();
         }, 2000);
     }
 }

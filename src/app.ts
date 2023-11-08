@@ -7,28 +7,9 @@ import authMiddleware from "./middleware/auth";
 import { contactsController } from "./controllers/contacts";
 import { usersController } from "./controllers/users";
 import { infoController } from "./controllers/info";
-import { ServerApiVersion } from 'mongodb';
-import mongoose from "mongoose";
-import "dotenv/config";
+import { Connection } from "./util/connection";
 
-const serverHost: string = (process.argv.includes("--atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
-const databaseName: string = process.env.DB_NAME || "";
-
-(async () => {
-  try {
-    await mongoose.connect(serverHost, {
-      dbName: databaseName,
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      },
-    });
-    console.log("CONNECTED");
-  } catch (error) {
-    throw new Error(`${error}`);
-  }
-})();
+Connection();
 
 export const app: Express = express();
 

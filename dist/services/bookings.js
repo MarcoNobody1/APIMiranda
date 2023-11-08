@@ -2,17 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookingService = void 0;
 const Bookings_model_1 = require("../models/Bookings.model");
+const connection_1 = require("../util/connection");
 async function getAllBookings() {
-    const bookings = await Bookings_model_1.Bookings.find();
-    if (bookings.length === 0)
-        throw new Error("Error al obtener las reservas.");
-    return bookings;
+    const query = 'SELECT * FROM booking';
+    const result = await (0, connection_1.QueryHandler)(query);
+    return result;
 }
 async function getOneBooking(bookingId) {
-    const booking = await Bookings_model_1.Bookings.findById(bookingId);
-    if (!booking)
-        throw new Error("No hay ninguna reserva con ese id.");
-    return booking;
+    const query = 'SELECT * FROM booking WHERE id = ?';
+    const fields = [bookingId];
+    const result = await (0, connection_1.QueryHandler)(query, fields);
+    return result;
 }
 async function postNewBooking(booking) {
     const newBooking = await Bookings_model_1.Bookings.create(booking);

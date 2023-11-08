@@ -1,16 +1,8 @@
 export interface RoomInterface {
-  room_name: {
-    id: string;
-    room_photo: string;
-    room_number: number;
-    room_description: string;
-  };
-  room_type: string;
-  amenities: string[];
+  number: string;
+  type: string;
+  description: string;
   price: number;
-  offer_price: {
-    isOffer: boolean;
-    discount: number;
-  };
+  discount: number;
   availability: string;
 }

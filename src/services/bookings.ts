@@ -1,21 +1,42 @@
 import { BookingInterface } from "../interfaces/Bookings";
-import { Bookings } from "../models/Bookings.model";
+import { QueryHandler } from "../util/connection";
 
 async function getAllBookings() {
-  const bookings = await Bookings.find();
-  if (bookings.length === 0) throw new Error("Error al obtener las reservas.");
+  const query = "SELECT * FROM booking";
+
+  const bookings = await QueryHandler(query);
+
   return bookings;
 }
 
 async function getOneBooking(bookingId: string) {
-  const booking = await Bookings.findById(bookingId);
-  if (!booking) throw new Error("No hay ninguna reserva con ese id.");
+  const query = "SELECT * FROM booking WHERE id = ?";
+
+  const fields = [bookingId];
+
+  const booking = await QueryHandler(query, fields);
+
   return booking;
 }
 
 async function postNewBooking(booking: BookingInterface) {
-  const newBooking = await Bookings.create(booking);
-  if (!newBooking) throw new Error("Tu reserva no se añadio correctamente.");
+  const query =
+    "INSERT INTO booking (nombre, apellido, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?)";
+
+  const fields = [
+    booking.nombre,
+    booking.apellido,
+    booking.order_date,
+    booking.check_in,
+    booking.check_out,
+    booking.special_request,
+    booking.room_id,
+    booking.price,
+    booking.status,
+  ];
+
+  const newBooking = await QueryHandler(query, fields);
+
   return newBooking;
 }
 
@@ -23,23 +44,33 @@ async function updateBooking(
   bookingId: string,
   update: Partial<BookingInterface>
 ) {
-  const updatedBooking = await Bookings.findByIdAndUpdate(bookingId, update, {
-    new: true,
-  });
+  const query =
+    "UPDATE booking SET(nombre = ?, apellido = ?, order_date = ?, check_in = ?, check_out = ?, special_request = ?, room_id = ?, price = ?, status = ?) WHERE id = ?";
 
-  if (!updatedBooking) {
-    throw new Error("No puedes modificar una reserva que no existe.");
-  }
+  const fields = [
+    update.nombre,
+    update.apellido,
+    update.order_date,
+    update.check_in,
+    update.check_out,
+    update.special_request,
+    update.room_id,
+    update.price,
+    update.status,
+    bookingId,
+  ];
+
+  const updatedBooking = await QueryHandler(query, fields);
 
   return updatedBooking;
 }
 
 async function deleteBooking(bookingId: string) {
-  const deletedBooking = await Bookings.findByIdAndDelete(bookingId);
+  const query = "DELETE booking WHERE id = ?";
 
-  if (!deletedBooking) {
-    throw new Error("No hay ninguna reserva con ese id.");
-  }
+  const fields = [bookingId];
+
+  const deletedBooking = await QueryHandler(query, fields);
 
   return deletedBooking;
 }
