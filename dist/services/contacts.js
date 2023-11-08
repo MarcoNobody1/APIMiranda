@@ -14,7 +14,7 @@ async function getOneContact(contactId) {
     return contact;
 }
 async function postNewContact(contact) {
-    const query = "INSERT INTO contact (date, name, email, phone, subject, comment, archived) VALUES (?,?,?,?,?,?,?,?,?)";
+    const query = "INSERT INTO contact (date, name, email, phone, subject, comment, archived) VALUES (?,?,?,?,?,?,?)";
     const fields = [
         contact.date,
         contact.name,
@@ -28,7 +28,7 @@ async function postNewContact(contact) {
     return newContact;
 }
 async function updateContact(contactId, update) {
-    const query = "UPDATE contact SET(date = ?, name = ?, email = ?, phone = ?, subject = ?, comment = ?, archived = ?) WHERE id = ?";
+    const query = "UPDATE contact SET date = ?, name = ?, email = ?, phone = ?, subject = ?, comment = ?, archived = ? WHERE id = ?";
     const fields = [
         update.date,
         update.name,
@@ -43,7 +43,7 @@ async function updateContact(contactId, update) {
     return updatedContact;
 }
 async function deleteContact(contactId) {
-    const query = "DELETE contact WHERE id = ?";
+    const query = "DELETE FROM contact WHERE id = ?";
     const fields = [contactId];
     const deletedContact = await (0, connection_1.QueryHandler)(query, fields);
     return deletedContact;

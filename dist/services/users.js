@@ -30,7 +30,7 @@ async function postNewUser(user) {
     return newUser;
 }
 async function updateUser(userId, update) {
-    const query = "UPDATE user SET(photo = ?, username = ?, position = ?, email = ?, password = ?, start_date = ?, job_description = ?, contact = ?, activity = ?) WHERE id = ?";
+    const query = "UPDATE user SET photo = ?, username = ?, position = ?, email = ?, password = ?, start_date = ?, job_description = ?, contact = ?, activity = ? WHERE id = ?";
     const fields = [
         update.photo,
         update.username,
@@ -47,7 +47,7 @@ async function updateUser(userId, update) {
     return updatedUser;
 }
 async function deleteUser(userId) {
-    const query = "DELETE user WHERE id = ?";
+    const query = "DELETE FROM user WHERE id = ?";
     const fields = [userId];
     const deletedUser = await (0, connection_1.QueryHandler)(query, fields);
     return deletedUser;
