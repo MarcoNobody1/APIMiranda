@@ -1,45 +1,70 @@
 import { RoomInterface } from "../interfaces/Rooms";
-import { Rooms } from "../models/Rooms.model";
+import { QueryHandler } from "../util/connection";
 
 async function getAllRooms() {
-  const rooms = await Rooms.find();
-  if (rooms.length === 0) throw new Error("Error al obtener las habitaciones.");
+  const query = "SELECT * FROM room";
+
+  const rooms = await QueryHandler(query);
+
   return rooms;
 }
 
 async function getOneRoom(roomId: string) {
-  const room = await Rooms.findById(roomId);
-  if (!room) throw new Error("No hay ninguna habitacion con ese id.");
+  const query = "SELECT * FROM room WHERE id = ?";
+
+  const fields = [roomId];
+
+  const room = await QueryHandler(query, fields);
+
   return room;
 }
 
 async function postNewRoom(room: RoomInterface) {
-  const newRoom = await Rooms.create(room);
-  if (!newRoom) throw new Error("Tu habitacion no se añadio correctamente.");
-  return newRoom;
+  const query =
+  "INSERT INTO room (number, type, description, price, discount, availability) VALUES (?,?,?,?,?,?)";
+
+const fields = [
+  room.number,
+  room.type,
+  room.description,
+  room.price,
+  room.discount,
+  room.availability,
+];
+
+const newRoom = await QueryHandler(query, fields);
+
+return newRoom;
 }
 
 async function updateRoom(
   roomId: string,
   update: Partial<RoomInterface>
 ) {
-  const updatedRoom = await Rooms.findByIdAndUpdate(roomId, update, {
-    new: true,
-  });
+  const query =
+  "UPDATE room SET(number = ?, type = ?, description = ?, price = ?, discount = ?, availability = ?) WHERE id = ?";
 
-  if (!updatedRoom) {
-    throw new Error("No puedes modificar una habitacion que no existe.");
-  }
+const fields = [
+  update.number,
+  update.type,
+  update.description,
+  update.price,
+  update.discount,
+  update.availability,
+  roomId,
+];
 
-  return updatedRoom;
+const updatedRoom = await QueryHandler(query, fields);
+
+return updatedRoom;
 }
 
 async function deleteRoom(roomId: string) {
-  const deletedRoom = await Rooms.findByIdAndDelete(roomId);
+  const query = "DELETE room WHERE id = ?";
 
-  if (!deletedRoom) {
-    throw new Error("No hay ninguna habitacion con ese id.");
-  }
+  const fields = [roomId];
+
+  const deletedRoom = await QueryHandler(query, fields);
 
   return deletedRoom;
 }
