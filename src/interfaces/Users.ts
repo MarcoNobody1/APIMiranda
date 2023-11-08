@@ -1,13 +1,10 @@
 export interface UserInterface {
-  name: {
-    photo: string;
-    username: string;
-    id: string;
-    employee_position: string;
-    email: string;
-    password_hash: string;
-  };
-  start_date: string;
+  photo: string;
+  username: string;
+  position: string;
+  email: string;
+  password: string;
+  start_date: Date;
   job_description: string;
   contact: string;
   activity: string;
