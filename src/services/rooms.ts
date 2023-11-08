@@ -42,7 +42,7 @@ async function updateRoom(
   update: Partial<RoomInterface>
 ) {
   const query =
-  "UPDATE room SET(number = ?, type = ?, description = ?, price = ?, discount = ?, availability = ?) WHERE id = ?";
+  "UPDATE room SET number = ?, type = ?, description = ?, price = ?, discount = ?, availability = ? WHERE id = ?";
 
 const fields = [
   update.number,
@@ -60,7 +60,7 @@ return updatedRoom;
 }
 
 async function deleteRoom(roomId: string) {
-  const query = "DELETE room WHERE id = ?";
+  const query = "DELETE FROM room WHERE id = ?";
 
   const fields = [roomId];
 
