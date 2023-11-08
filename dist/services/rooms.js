@@ -27,7 +27,7 @@ async function postNewRoom(room) {
     return newRoom;
 }
 async function updateRoom(roomId, update) {
-    const query = "UPDATE room SET(number = ?, type = ?, description = ?, price = ?, discount = ?, availability = ?) WHERE id = ?";
+    const query = "UPDATE room SET number = ?, type = ?, description = ?, price = ?, discount = ?, availability = ? WHERE id = ?";
     const fields = [
         update.number,
         update.type,
@@ -41,7 +41,7 @@ async function updateRoom(roomId, update) {
     return updatedRoom;
 }
 async function deleteRoom(roomId) {
-    const query = "DELETE room WHERE id = ?";
+    const query = "DELETE FROM room WHERE id = ?";
     const fields = [roomId];
     const deletedRoom = await (0, connection_1.QueryHandler)(query, fields);
     return deletedRoom;

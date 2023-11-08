@@ -42,7 +42,7 @@ async function postNewUser(user: UserInterface) {
 
 async function updateUser(userId: string, update: Partial<UserInterface>) {
   const query =
-    "UPDATE user SET(photo = ?, username = ?, position = ?, email = ?, password = ?, start_date = ?, job_description = ?, contact = ?, activity = ?) WHERE id = ?";
+    "UPDATE user SET photo = ?, username = ?, position = ?, email = ?, password = ?, start_date = ?, job_description = ?, contact = ?, activity = ? WHERE id = ?";
 
   const fields = [
     update.photo,
@@ -63,7 +63,7 @@ async function updateUser(userId: string, update: Partial<UserInterface>) {
 }
 
 async function deleteUser(userId: string) {
-  const query = "DELETE user WHERE id = ?";
+  const query = "DELETE FROM user WHERE id = ?";
 
   const fields = [userId];
 
