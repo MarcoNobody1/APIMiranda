@@ -7,8 +7,6 @@ import { Rooms } from '../models/Rooms.model';
 import { Bookings } from '../models/Bookings.model';
 import { Contacts } from '../models/Contacts.model';
 import { Users } from '../models/Users.model';
-import { ServerApiVersion } from "mongodb";
-import mongoose from "mongoose";
 import "dotenv/config";
 
 const ITERATIONS: number = 10;
@@ -21,14 +19,7 @@ async function seedDatabase () {
 
   try {
 
-    await mongoose.connect(serverHost, {
-      dbName: databaseName,
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      },
-    });
+
     console.log("CONNECTED");
 
 
@@ -187,7 +178,7 @@ async function seedDatabase () {
     throw new Error(`${error}`);
   } finally {
     setTimeout(() => {
-      mongoose.disconnect();
+
     }, 2000);
     
   }
