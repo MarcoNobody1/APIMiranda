@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mysql2_1 = __importDefault(require("mysql2"));
+require("dotenv/config");
 // Configura la conexión a MySQL
 const connection = mysql2_1.default.createConnection({
     host: process.env.SQL_URL,
@@ -14,14 +15,14 @@ const connection = mysql2_1.default.createConnection({
 // Conecta a MySQL
 connection.connect((err) => {
     if (err) {
-        console.error('Error al conectar a MySQL: ' + err.message);
+        console.error("Error al conectar a MySQL: " + err.message);
     }
     else {
-        console.log('Conexión exitosa a MySQL');
+        console.log("Conexión exitosa a MySQL");
         // Crea la base de datos
         connection.query(`CREATE DATABASE IF NOT EXISTS ${process.env.SQL_DBNAME}`, (error) => {
             if (error) {
-                console.error('Error al crear la base de datos: ' + error.message);
+                console.error("Error al crear la base de datos: " + error.message);
             }
             else {
                 console.log(`Base de datos "${process.env.SQL_DBNAME}" creada con éxito`);
@@ -29,10 +30,10 @@ connection.connect((err) => {
             // Cierra la conexión a MySQL
             connection.end((closeError) => {
                 if (closeError) {
-                    console.error('Error al cerrar la conexión: ' + closeError.message);
+                    console.error("Error al cerrar la conexión: " + closeError.message);
                 }
                 else {
-                    console.log('Conexión cerrada correctamente');
+                    console.log("Conexión cerrada correctamente");
                 }
             });
         });

@@ -1,39 +1,55 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userService = void 0;
-const Users_model_1 = require("../models/Users.model");
+const connection_1 = require("../util/connection");
 async function getAllUsers() {
-    const users = await Users_model_1.Users.find();
-    if (users.length === 0)
-        throw new Error("Error al obtener los usuarios.");
+    const query = "SELECT * FROM user";
+    const users = await (0, connection_1.QueryHandler)(query);
     return users;
 }
 async function getOneUser(userId) {
-    const user = await Users_model_1.Users.findById(userId);
-    if (!user)
-        throw new Error("No hay ningun usuario con ese id.");
+    const query = "SELECT * FROM user WHERE id = ?";
+    const fields = [userId];
+    const user = await (0, connection_1.QueryHandler)(query, fields);
     return user;
 }
-async function postNewUser(User) {
-    const newUser = await Users_model_1.Users.create(User);
-    if (!newUser)
-        throw new Error("Tu usuario no se añadio correctamente.");
+async function postNewUser(user) {
+    const query = "INSERT INTO user (photo, username, position, email, password, start_date, job_description, contact, activity) VALUES (?,?,?,?,?,?,?,?,?)";
+    const fields = [
+        user.photo,
+        user.username,
+        user.position,
+        user.email,
+        user.password,
+        user.start_date,
+        user.job_description,
+        user.contact,
+        user.activity,
+    ];
+    const newUser = await (0, connection_1.QueryHandler)(query, fields);
     return newUser;
 }
 async function updateUser(userId, update) {
-    const updatedUser = await Users_model_1.Users.findByIdAndUpdate(userId, update, {
-        new: true,
-    });
-    if (!updatedUser) {
-        throw new Error("No puedes modificar un usuario que no existe.");
-    }
+    const query = "UPDATE user SET(photo = ?, username = ?, position = ?, email = ?, password = ?, start_date = ?, job_description = ?, contact = ?, activity = ?) WHERE id = ?";
+    const fields = [
+        update.photo,
+        update.username,
+        update.position,
+        update.email,
+        update.password,
+        update.start_date,
+        update.job_description,
+        update.contact,
+        update.activity,
+        userId
+    ];
+    const updatedUser = await (0, connection_1.QueryHandler)(query, fields);
     return updatedUser;
 }
 async function deleteUser(userId) {
-    const deletedUser = await Users_model_1.Users.findByIdAndDelete(userId);
-    if (!deletedUser) {
-        throw new Error("No hay ningun usuario con ese id.");
-    }
+    const query = "DELETE user WHERE id = ?";
+    const fields = [userId];
+    const deletedUser = await (0, connection_1.QueryHandler)(query, fields);
     return deletedUser;
 }
 exports.userService = {
