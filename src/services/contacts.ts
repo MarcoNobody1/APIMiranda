@@ -21,7 +21,7 @@ async function getOneContact(contactId: string) {
 
 async function postNewContact(contact: ContactInterface) {
   const query =
-    "INSERT INTO contact (date, name, email, phone, subject, comment, archived) VALUES (?,?,?,?,?,?,?,?,?)";
+    "INSERT INTO contact (date, name, email, phone, subject, comment, archived) VALUES (?,?,?,?,?,?,?)";
 
   const fields = [
     contact.date,
@@ -43,7 +43,7 @@ async function updateContact(
   update: Partial<ContactInterface>
 ) {
   const query =
-  "UPDATE contact SET(date = ?, name = ?, email = ?, phone = ?, subject = ?, comment = ?, archived = ?) WHERE id = ?";
+  "UPDATE contact SET date = ?, name = ?, email = ?, phone = ?, subject = ?, comment = ?, archived = ? WHERE id = ?";
 
 const fields = [
   update.date,
@@ -62,7 +62,7 @@ return updatedContact;
 }
 
 async function deleteContact(contactId: string) {
-  const query = "DELETE contact WHERE id = ?";
+  const query = "DELETE FROM contact WHERE id = ?";
 
   const fields = [contactId];
 
