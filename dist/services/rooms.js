@@ -1,39 +1,49 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.roomService = void 0;
-const Rooms_model_1 = require("../models/Rooms.model");
+const connection_1 = require("../util/connection");
 async function getAllRooms() {
-    const rooms = await Rooms_model_1.Rooms.find();
-    if (rooms.length === 0)
-        throw new Error("Error al obtener las habitaciones.");
+    const query = "SELECT * FROM room";
+    const rooms = await (0, connection_1.QueryHandler)(query);
     return rooms;
 }
 async function getOneRoom(roomId) {
-    const room = await Rooms_model_1.Rooms.findById(roomId);
-    if (!room)
-        throw new Error("No hay ninguna habitacion con ese id.");
+    const query = "SELECT * FROM room WHERE id = ?";
+    const fields = [roomId];
+    const room = await (0, connection_1.QueryHandler)(query, fields);
     return room;
 }
 async function postNewRoom(room) {
-    const newRoom = await Rooms_model_1.Rooms.create(room);
-    if (!newRoom)
-        throw new Error("Tu habitacion no se añadio correctamente.");
+    const query = "INSERT INTO room (number, type, description, price, discount, availability) VALUES (?,?,?,?,?,?)";
+    const fields = [
+        room.number,
+        room.type,
+        room.description,
+        room.price,
+        room.discount,
+        room.availability,
+    ];
+    const newRoom = await (0, connection_1.QueryHandler)(query, fields);
     return newRoom;
 }
 async function updateRoom(roomId, update) {
-    const updatedRoom = await Rooms_model_1.Rooms.findByIdAndUpdate(roomId, update, {
-        new: true,
-    });
-    if (!updatedRoom) {
-        throw new Error("No puedes modificar una habitacion que no existe.");
-    }
+    const query = "UPDATE room SET(number = ?, type = ?, description = ?, price = ?, discount = ?, availability = ?) WHERE id = ?";
+    const fields = [
+        update.number,
+        update.type,
+        update.description,
+        update.price,
+        update.discount,
+        update.availability,
+        roomId,
+    ];
+    const updatedRoom = await (0, connection_1.QueryHandler)(query, fields);
     return updatedRoom;
 }
 async function deleteRoom(roomId) {
-    const deletedRoom = await Rooms_model_1.Rooms.findByIdAndDelete(roomId);
-    if (!deletedRoom) {
-        throw new Error("No hay ninguna habitacion con ese id.");
-    }
+    const query = "DELETE room WHERE id = ?";
+    const fields = [roomId];
+    const deletedRoom = await (0, connection_1.QueryHandler)(query, fields);
     return deletedRoom;
 }
 exports.roomService = {
