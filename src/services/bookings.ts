@@ -45,7 +45,7 @@ async function updateBooking(
   update: Partial<BookingInterface>
 ) {
   const query =
-    "UPDATE booking SET(nombre = ?, apellido = ?, order_date = ?, check_in = ?, check_out = ?, special_request = ?, room_id = ?, price = ?, status = ?) WHERE id = ?";
+    "UPDATE booking SET nombre = ?, apellido = ?, order_date = ?, check_in = ?, check_out = ?, special_request = ?, room_id = ?, price = ?, status = ? WHERE id = ?";
 
   const fields = [
     update.nombre,
@@ -66,7 +66,7 @@ async function updateBooking(
 }
 
 async function deleteBooking(bookingId: string) {
-  const query = "DELETE booking WHERE id = ?";
+  const query = "DELETE FROM booking WHERE id = ?";
 
   const fields = [bookingId];
 
