@@ -1,16 +1,24 @@
 import { BookingInterface } from "../interfaces/Bookings";
 import { Bookings } from "../models/Bookings.model";
+import { QueryHandler } from "../util/connection";
 
 async function getAllBookings() {
-  const bookings = await Bookings.find();
-  if (bookings.length === 0) throw new Error("Error al obtener las reservas.");
-  return bookings;
+
+  const query = 'SELECT * FROM booking';
+
+  const result = await QueryHandler(query)
+
+  return result;
 }
 
 async function getOneBooking(bookingId: string) {
-  const booking = await Bookings.findById(bookingId);
-  if (!booking) throw new Error("No hay ninguna reserva con ese id.");
-  return booking;
+  const query = 'SELECT * FROM booking WHERE id = ?';
+
+  const fields = [bookingId];
+
+  const result = await QueryHandler(query, fields);
+
+  return result;
 }
 
 async function postNewBooking(booking: BookingInterface) {
