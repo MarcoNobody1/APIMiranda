@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
     `email` VARCHAR(45) NOT NULL,
     `phone` VARCHAR(45) NOT NULL,
     `subject` VARCHAR(45) NOT NULL,
-    `comment` VARCHAR(45) NOT NULL,
+    `comment` VARCHAR(255) NOT NULL,
     `archived` BINARY NOT NULL,
     PRIMARY KEY (`id`)
 );
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `user` (
     `id` INT NOT NULL AUTO_INCREMENT,
-    `photo` VARCHAR(45) NOT NULL,
+    `photo` VARCHAR(255) NOT NULL,
     `username` VARCHAR(45) NOT NULL,
     `position` VARCHAR(45) NOT NULL,
     `email` VARCHAR(45) NOT NULL,
