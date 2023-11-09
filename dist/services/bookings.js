@@ -3,12 +3,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookingService = void 0;
 const connection_1 = require("../util/connection");
 async function getAllBookings() {
-    const query = "SELECT * FROM booking";
+    const query = `SELECT b.*,
+  r.type AS room_type,
+  r.number AS room_number,
+  r.description AS description,
+  GROUP_CONCAT(DISTINCT p.photo_url) AS photo,
+  GROUP_CONCAT(a.amenity) AS amenities
+  FROM booking b
+  LEFT JOIN room r ON r.id = b.room_id
+  LEFT JOIN room_amenities ra ON r.id = ra.room_id
+  LEFT JOIN amenity a ON ra.amenity_id = a.id
+  LEFT JOIN photos p ON r.id = p.room_id
+  GROUP BY b.id`;
     const bookings = await (0, connection_1.QueryHandler)(query);
     return bookings;
 }
 async function getOneBooking(bookingId) {
-    const query = "SELECT * FROM booking WHERE id = ?";
+    const query = `SELECT b.*,
+  r.type AS room_type,
+  r.number AS room_number,
+  r.description AS description,
+  GROUP_CONCAT(DISTINCT p.photo_url) AS photo,
+  GROUP_CONCAT(a.amenity) AS amenities
+  FROM booking b
+  LEFT JOIN room r ON r.id = b.room_id
+  LEFT JOIN room_amenities ra ON r.id = ra.room_id
+  LEFT JOIN amenity a ON ra.amenity_id = a.id
+  LEFT JOIN photos p ON r.id = p.room_id WHERE b.id = ?
+  GROUP BY b.id`;
     const fields = [bookingId];
     const booking = await (0, connection_1.QueryHandler)(query, fields);
     return booking;
