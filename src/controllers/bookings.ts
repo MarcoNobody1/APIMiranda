@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
 import { BookingInterface } from "../interfaces/Bookings";
 import { bookingService } from "../services/bookings";
+import { genValidationMiddleware } from "../middleware/validation";
+import { BookingSchema } from "../models/BookingSchema";
 
 export const bookingsController = Router();   
 
@@ -44,7 +46,7 @@ bookingsController.put("/:id", async (req: Request,res: Response) => {
   }
 );
 
-bookingsController.post("/", async (req: Request<BookingInterface>, res: Response) => {
+bookingsController.post("/",genValidationMiddleware(BookingSchema), async (req: Request<{}, BookingInterface>, res: Response) => {
     try {
       const added = await bookingService.postNewBooking(req.body);
       res.json(added);
