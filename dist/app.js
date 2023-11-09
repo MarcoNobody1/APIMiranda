@@ -13,8 +13,6 @@ const auth_1 = __importDefault(require("./middleware/auth"));
 const contacts_1 = require("./controllers/contacts");
 const users_1 = require("./controllers/users");
 const info_1 = require("./controllers/info");
-const connection_1 = require("./util/connection");
-(0, connection_1.Connection)();
 exports.app = (0, express_1.default)();
 exports.app.use((0, cors_1.default)());
 exports.app.use(express_1.default.json());
