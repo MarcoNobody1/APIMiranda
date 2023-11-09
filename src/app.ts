@@ -7,9 +7,6 @@ import authMiddleware from "./middleware/auth";
 import { contactsController } from "./controllers/contacts";
 import { usersController } from "./controllers/users";
 import { infoController } from "./controllers/info";
-import { Connection } from "./util/connection";
-
-Connection();
 
 export const app: Express = express();
 
