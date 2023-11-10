@@ -1,6 +1,4 @@
 import { UserInterface } from "../interfaces/Users";
-import { QueryHandler } from "../util/connection";
-
 async function getAllUsers() {
   const query = "SELECT * FROM user";
 
@@ -24,7 +22,7 @@ async function postNewUser(user: UserInterface) {
     "INSERT INTO user (photo, username, position, email, password, start_date, job_description, contact, activity) VALUES (?,?,?,?,?,?,?,?,?)";
 
   const fields = [
-    user.photo,
+    user.avatar,
     user.username,
     user.position,
     user.email,
@@ -45,7 +43,7 @@ async function updateUser(userId: string, update: Partial<UserInterface>) {
     "UPDATE user SET photo = ?, username = ?, position = ?, email = ?, password = ?, start_date = ?, job_description = ?, contact = ?, activity = ? WHERE id = ?";
 
   const fields = [
-    update.photo,
+    update.avatar,
     update.username,
     update.position,
     update.email,

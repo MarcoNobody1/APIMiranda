@@ -38,8 +38,8 @@ async function getOneBooking(bookingId) {
 async function postNewBooking(booking) {
     const query = "INSERT INTO booking (nombre, apellido, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?)";
     const fields = [
-        booking.nombre,
-        booking.apellido,
+        booking.name,
+        booking.surname,
         booking.order_date,
         booking.check_in,
         booking.check_out,
@@ -54,8 +54,8 @@ async function postNewBooking(booking) {
 async function updateBooking(bookingId, update) {
     const query = "UPDATE booking SET nombre = ?, apellido = ?, order_date = ?, check_in = ?, check_out = ?, special_request = ?, room_id = ?, price = ?, status = ? WHERE id = ?";
     const fields = [
-        update.nombre,
-        update.apellido,
+        update.name,
+        update.surname,
         update.order_date,
         update.check_in,
         update.check_out,

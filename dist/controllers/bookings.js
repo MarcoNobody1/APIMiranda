@@ -3,8 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.bookingsController = void 0;
 const express_1 = require("express");
 const bookings_1 = require("../services/bookings");
-const validation_1 = require("../middleware/validation");
-const BookingSchema_1 = require("../schemas/BookingSchema");
 exports.bookingsController = (0, express_1.Router)();
 exports.bookingsController.get("/", async (_req, res) => {
     try {
@@ -33,7 +31,7 @@ exports.bookingsController.delete("/:id", async (req, res) => {
         res.status(400).json(`${error}`);
     }
 });
-exports.bookingsController.put("/:id", (0, validation_1.genValidationMiddleware)(BookingSchema_1.BookingSchema), async (req, res) => {
+exports.bookingsController.put("/:id", async (req, res) => {
     try {
         const updated = await bookings_1.bookingService.updateBooking(req.params.id, req.body);
         res.json(updated);
@@ -42,7 +40,7 @@ exports.bookingsController.put("/:id", (0, validation_1.genValidationMiddleware)
         res.status(400).json(`${error}`);
     }
 });
-exports.bookingsController.post("/", (0, validation_1.genValidationMiddleware)(BookingSchema_1.BookingSchema), async (req, res) => {
+exports.bookingsController.post("/", async (req, res) => {
     try {
         const added = await bookings_1.bookingService.postNewBooking(req.body);
         res.json(added);
