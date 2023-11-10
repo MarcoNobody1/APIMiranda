@@ -33,7 +33,7 @@ exports.bookingsController.delete("/:id", async (req, res) => {
         res.status(400).json(`${error}`);
     }
 });
-exports.bookingsController.put("/:id", async (req, res) => {
+exports.bookingsController.put("/:id", (0, validation_1.genValidationMiddleware)(BookingSchema_1.BookingSchema), async (req, res) => {
     try {
         const updated = await bookings_1.bookingService.updateBooking(req.params.id, req.body);
         res.json(updated);
