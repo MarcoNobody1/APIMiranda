@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
 import { ContactInterface } from "../interfaces/Contacts";
 import { contactService } from "../services/contacts";
+import { ContactSchema } from "../models/ContactSchema";
+import { genValidationMiddleware } from "../middleware/validation";
 
 export const contactsController = Router();   
 
@@ -34,7 +36,7 @@ contactsController.delete("/:id", async (req: Request, res: Response) => {
   }
 );
 
-contactsController.put("/:id", async (req: Request,res: Response) => {
+contactsController.put("/:id", genValidationMiddleware(ContactSchema), async (req: Request,res: Response) => {
     try {
       const updated = await contactService.updateContact(req.params.id, req.body);
       res.json(updated);
@@ -44,7 +46,7 @@ contactsController.put("/:id", async (req: Request,res: Response) => {
   }
 );
 
-contactsController.post("/", async (req: Request<ContactInterface>, res: Response) => {
+contactsController.post("/",genValidationMiddleware(ContactSchema), async (req: Request< {}, ContactInterface>, res: Response) => {
     try {
       const added = await contactService.postNewContact(req.body);
       res.json(added);
