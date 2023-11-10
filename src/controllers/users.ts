@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { UserInterface } from "../interfaces/Users";
 import { userService } from "../services/users";
 import { genValidationMiddleware } from "../middleware/validation";
-import { RoomSchema } from "../models/RoomSchema";
+import { RoomSchema } from "../schemas/RoomSchema";
 
 export const usersController = Router();   
 

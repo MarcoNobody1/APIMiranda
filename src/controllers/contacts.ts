@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import { ContactInterface } from "../interfaces/Contacts";
 import { contactService } from "../services/contacts";
-import { ContactSchema } from "../models/ContactSchema";
+import { ContactSchema } from "../schemas/ContactSchema";
 import { genValidationMiddleware } from "../middleware/validation";
 
 export const contactsController = Router();   

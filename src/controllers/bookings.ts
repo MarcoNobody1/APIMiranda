@@ -2,7 +2,7 @@ import { Request, Response, Router } from "express";
 import { BookingInterface } from "../interfaces/Bookings";
 import { bookingService } from "../services/bookings";
 import { genValidationMiddleware } from "../middleware/validation";
-import { BookingSchema } from "../models/BookingSchema";
+import { BookingSchema } from "../schemas/BookingSchema";
 
 export const bookingsController = Router();   
 

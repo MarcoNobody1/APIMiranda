@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import { RoomInterface } from "../interfaces/Rooms";
 import { roomService } from "../services/rooms";
-import { RoomSchema } from "../models/RoomSchema";
+import { RoomSchema } from "../schemas/RoomSchema";
 import { genValidationMiddleware } from "../middleware/validation";
 
 export const roomsController = Router();   
