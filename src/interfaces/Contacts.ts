@@ -1,5 +1,5 @@
 export interface ContactInterface {
-  date: Date;
+  date: string;
   name: string;
   email: string;
   phone: string;

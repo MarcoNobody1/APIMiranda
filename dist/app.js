@@ -12,9 +12,28 @@ const login_1 = require("./controllers/login");
 const auth_1 = __importDefault(require("./middleware/auth"));
 const contacts_1 = require("./controllers/contacts");
 const users_1 = require("./controllers/users");
+const connect_1 = require("./util/connect");
 const info_1 = require("./controllers/info");
+(0, connect_1.ConnectToDatabase)();
 exports.app = (0, express_1.default)();
-exports.app.use((0, cors_1.default)());
+exports.app.use((0, cors_1.default)({
+    origin: [
+        "http://localhost:3000",
+        "http://localhost:3000/login",
+        "http://localhost:3000/bookings",
+        "http://localhost:3000/rooms",
+        "http://localhost:3000/contacts",
+        "http://localhost:3000/users",
+    ],
+    credentials: true,
+    methods: ["GET", "PUT", "POST", "DELETE"],
+    allowedHeaders: "token",
+}));
+exports.app.use((req, res, next) => {
+    if (req.method === "OPTIONS")
+        return res.end();
+    next();
+});
 exports.app.use(express_1.default.json());
 // public routes & middleware
 exports.app.use("/", info_1.infoController);

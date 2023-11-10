@@ -17,7 +17,7 @@ async function login(user, password) {
     return await signJWT({ user });
 }
 function signJWT(payload) {
-    const token = jsonwebtoken_1.default.sign(payload, secretToken, { expiresIn: "1h" });
+    const token = jsonwebtoken_1.default.sign(payload, secretToken);
     return { payload, token };
 }
 function verifyJWT(token) {
