@@ -36,7 +36,7 @@ bookingsController.delete("/:id", async (req: Request, res: Response) => {
   }
 );
 
-bookingsController.put("/:id", async (req: Request,res: Response) => {
+bookingsController.put("/:id",genValidationMiddleware(BookingSchema), async (req: Request,res: Response) => {
     try {
       const updated = await bookingService.updateBooking(req.params.id, req.body);
       res.json(updated);

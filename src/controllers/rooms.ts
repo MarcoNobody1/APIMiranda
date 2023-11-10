@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
 import { RoomInterface } from "../interfaces/Rooms";
 import { roomService } from "../services/rooms";
+import { RoomSchema } from "../models/RoomSchema";
+import { genValidationMiddleware } from "../middleware/validation";
 
 export const roomsController = Router();   
 
@@ -34,7 +36,7 @@ roomsController.delete("/:id", async (req: Request, res: Response) => {
   }
 );
 
-roomsController.put("/:id", async (req: Request,res: Response) => {
+roomsController.put("/:id",genValidationMiddleware(RoomSchema), async (req: Request,res: Response) => {
     try {
       const updated = await roomService.updateRoom(req.params.id, req.body);
       res.json(updated);
@@ -44,7 +46,7 @@ roomsController.put("/:id", async (req: Request,res: Response) => {
   }
 );
 
-roomsController.post("/", async (req: Request<RoomInterface>, res: Response) => {
+roomsController.post("/",genValidationMiddleware(RoomSchema), async (req: Request<{}, RoomInterface>, res: Response) => {
     try {
       const added = await roomService.postNewRoom(req.body);
       res.json(added);

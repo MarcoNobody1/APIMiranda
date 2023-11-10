@@ -1,6 +1,8 @@
 import { Request, Response, Router } from "express";
 import { UserInterface } from "../interfaces/Users";
 import { userService } from "../services/users";
+import { genValidationMiddleware } from "../middleware/validation";
+import { RoomSchema } from "../models/RoomSchema";
 
 export const usersController = Router();   
 
@@ -34,7 +36,7 @@ usersController.delete("/:id", async (req: Request, res: Response) => {
   }
 );
 
-usersController.put("/:id", async (req: Request,res: Response) => {
+usersController.put("/:id", genValidationMiddleware(RoomSchema), async (req: Request,res: Response) => {
     try {
       const result = await userService.updateUser(req.params.id, req.body);
       res.json(result);
@@ -44,7 +46,7 @@ usersController.put("/:id", async (req: Request,res: Response) => {
   }
 );
 
-usersController.post("/", async (req: Request<UserInterface>, res: Response) => {
+usersController.post("/", genValidationMiddleware(RoomSchema), async (req: Request< {}, UserInterface>, res: Response) => {
     try {
       const result = await userService.postNewUser(req.body);
       res.json(result);

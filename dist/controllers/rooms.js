@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.roomsController = void 0;
 const express_1 = require("express");
 const rooms_1 = require("../services/rooms");
+const RoomSchema_1 = require("../models/RoomSchema");
+const validation_1 = require("../middleware/validation");
 exports.roomsController = (0, express_1.Router)();
 exports.roomsController.get("/", async (_req, res) => {
     try {
@@ -31,7 +33,7 @@ exports.roomsController.delete("/:id", async (req, res) => {
         res.status(400).json(`${error}`);
     }
 });
-exports.roomsController.put("/:id", async (req, res) => {
+exports.roomsController.put("/:id", (0, validation_1.genValidationMiddleware)(RoomSchema_1.RoomSchema), async (req, res) => {
     try {
         const updated = await rooms_1.roomService.updateRoom(req.params.id, req.body);
         res.json(updated);
@@ -40,7 +42,7 @@ exports.roomsController.put("/:id", async (req, res) => {
         res.status(400).json(`${error}`);
     }
 });
-exports.roomsController.post("/", async (req, res) => {
+exports.roomsController.post("/", (0, validation_1.genValidationMiddleware)(RoomSchema_1.RoomSchema), async (req, res) => {
     try {
         const added = await rooms_1.roomService.postNewRoom(req.body);
         res.json(added);
