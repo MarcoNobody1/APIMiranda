@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.roomsController = void 0;
 const express_1 = require("express");
 const rooms_1 = require("../services/rooms");
-const RoomSchema_1 = require("../models/RoomSchema");
+const RoomSchema_1 = require("../schemas/RoomSchema");
 const validation_1 = require("../middleware/validation");
 exports.roomsController = (0, express_1.Router)();
 exports.roomsController.get("/", async (_req, res) => {

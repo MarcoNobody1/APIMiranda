@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.contactsController = void 0;
 const express_1 = require("express");
 const contacts_1 = require("../services/contacts");
-const ContactSchema_1 = require("../models/ContactSchema");
+const ContactSchema_1 = require("../schemas/ContactSchema");
 const validation_1 = require("../middleware/validation");
 exports.contactsController = (0, express_1.Router)();
 exports.contactsController.get("/", async (_req, res) => {

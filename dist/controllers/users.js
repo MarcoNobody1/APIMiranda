@@ -4,7 +4,7 @@ exports.usersController = void 0;
 const express_1 = require("express");
 const users_1 = require("../services/users");
 const validation_1 = require("../middleware/validation");
-const RoomSchema_1 = require("../models/RoomSchema");
+const RoomSchema_1 = require("../schemas/RoomSchema");
 exports.usersController = (0, express_1.Router)();
 exports.usersController.get("/", async (_req, res) => {
     try {

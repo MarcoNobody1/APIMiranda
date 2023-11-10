@@ -4,7 +4,7 @@ exports.bookingsController = void 0;
 const express_1 = require("express");
 const bookings_1 = require("../services/bookings");
 const validation_1 = require("../middleware/validation");
-const BookingSchema_1 = require("../models/BookingSchema");
+const BookingSchema_1 = require("../schemas/BookingSchema");
 exports.bookingsController = (0, express_1.Router)();
 exports.bookingsController.get("/", async (_req, res) => {
     try {
