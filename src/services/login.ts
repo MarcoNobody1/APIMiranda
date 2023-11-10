@@ -6,7 +6,7 @@ const defaultUser = {
   password: "admin",
 };
 
-const secretToken: string = process.env.SECRET_KEY|| "";
+const secretToken: string = process.env.SECRET_KEY || "";
 
 async function login(user: string, password: string) {
   if (defaultUser.user !== user || defaultUser.password !== password) {
@@ -16,7 +16,7 @@ async function login(user: string, password: string) {
 }
 
 function signJWT(payload: { user: string }) {
-  const token = jwt.sign(payload, secretToken, { expiresIn: "1h" });
+  const token = jwt.sign(payload, secretToken);
   return { payload, token };
 }
 
