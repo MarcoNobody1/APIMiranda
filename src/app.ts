@@ -6,33 +6,34 @@ import { loginController } from "./controllers/login";
 import authMiddleware from "./middleware/auth";
 import { contactsController } from "./controllers/contacts";
 import { usersController } from "./controllers/users";
+import { ConnectToDatabase } from "./util/connect";
 import { infoController } from "./controllers/info";
-import { ServerApiVersion } from 'mongodb';
-import mongoose from "mongoose";
-import "dotenv/config";
 
-const serverHost: string = (process.argv.includes("--atlas") ? process.env.ATLAS_SERVER : process.env.SERVER_URL) || '';
-const databaseName: string = process.env.DB_NAME || "";
-
-(async () => {
-  try {
-    await mongoose.connect(serverHost, {
-      dbName: databaseName,
-      serverApi: {
-        version: ServerApiVersion.v1,
-        strict: true,
-        deprecationErrors: true,
-      },
-    });
-    console.log("CONNECTED");
-  } catch (error) {
-    throw new Error(`${error}`);
-  }
-})();
+ConnectToDatabase();
 
 export const app: Express = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:3000/login",
+      "http://localhost:3000/bookings",
+      "http://localhost:3000/rooms",
+      "http://localhost:3000/contacts",
+      "http://localhost:3000/users",
+    ],
+    credentials: true,
+    methods: ["GET", "PUT", "POST", "DELETE"],
+    allowedHeaders: "token",
+  })
+);
+
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") return res.end();
+  next();
+});
+
 app.use(express.json());
 
 // public routes & middleware
