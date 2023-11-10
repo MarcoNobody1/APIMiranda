@@ -7,14 +7,11 @@ exports.Users = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const { Schema } = mongoose_1.default;
 const usersSchema = new Schema({
-    name: {
-        photo: { type: String, required: true },
-        username: { type: String, required: true },
-        id: { type: String, required: true },
-        employee_position: { type: String, required: true },
-        email: { type: String, required: true },
-        password_hash: { type: String, required: true },
-    },
+    avatar: { type: String, required: true },
+    username: { type: String, required: true },
+    position: { type: String, required: true },
+    email: { type: String, required: true },
+    password: { type: String, required: true },
     start_date: { type: String, required: true },
     job_description: { type: String, required: true },
     contact: { type: String, required: true },

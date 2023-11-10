@@ -7,15 +7,10 @@ exports.Contacts = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const { Schema } = mongoose_1.default;
 const contactsSchema = new Schema({
-    date: {
-        id: { type: String, required: true },
-        send_date: { type: String, required: true },
-    },
-    customer: {
-        name: { type: String, required: true },
-        email: { type: String, required: true },
-        phone: { type: String, required: true },
-    },
+    date: { type: String, required: true },
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    phone: { type: String, required: true },
     subject: { type: String, required: true },
     comment: { type: String, required: true },
     archived: { type: Boolean, required: true },
