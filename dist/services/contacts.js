@@ -1,51 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.contactService = void 0;
-const connection_1 = require("../util/connection");
+const Contacts_model_1 = require("../models/Contacts.model");
 async function getAllContacts() {
-    const query = "SELECT * FROM contact";
-    const contacts = await (0, connection_1.QueryHandler)(query);
+    const contacts = await Contacts_model_1.Contacts.find();
+    if (contacts.length === 0)
+        throw new Error("Error al obtener los mensajes.");
     return contacts;
 }
 async function getOneContact(contactId) {
-    const query = "SELECT * FROM contact WHERE id = ?";
-    const fields = [contactId];
-    const contact = await (0, connection_1.QueryHandler)(query, fields);
+    const contact = await Contacts_model_1.Contacts.findById(contactId);
+    if (!contact)
+        throw new Error("No hay ningun mensaje con ese id.");
     return contact;
 }
 async function postNewContact(contact) {
-    const query = "INSERT INTO contact (date, name, email, phone, subject, comment, archived) VALUES (?,?,?,?,?,?,?)";
-    const fields = [
-        contact.date,
-        contact.name,
-        contact.email,
-        contact.phone,
-        contact.subject,
-        contact.comment,
-        contact.archived,
-    ];
-    const newContact = await (0, connection_1.QueryHandler)(query, fields);
+    const newContact = await Contacts_model_1.Contacts.create(contact);
+    if (!newContact)
+        throw new Error("Tu mensaje no se añadio correctamente.");
     return newContact;
 }
 async function updateContact(contactId, update) {
-    const query = "UPDATE contact SET date = ?, name = ?, email = ?, phone = ?, subject = ?, comment = ?, archived = ? WHERE id = ?";
-    const fields = [
-        update.date,
-        update.name,
-        update.email,
-        update.phone,
-        update.subject,
-        update.comment,
-        update.archived,
-        contactId
-    ];
-    const updatedContact = await (0, connection_1.QueryHandler)(query, fields);
+    const updatedContact = await Contacts_model_1.Contacts.findByIdAndUpdate(contactId, update, {
+        new: true,
+    });
+    if (!updatedContact) {
+        throw new Error("No puedes modificar un mensaje que no existe.");
+    }
     return updatedContact;
 }
 async function deleteContact(contactId) {
-    const query = "DELETE FROM contact WHERE id = ?";
-    const fields = [contactId];
-    const deletedContact = await (0, connection_1.QueryHandler)(query, fields);
+    const deletedContact = await Contacts_model_1.Contacts.findByIdAndDelete(contactId);
+    if (!deletedContact) {
+        throw new Error("No hay ningun mensaje con ese id.");
+    }
     return deletedContact;
 }
 exports.contactService = {
