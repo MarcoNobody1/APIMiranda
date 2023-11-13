@@ -29,9 +29,22 @@ async function seedDatabase() {
         });
         console.log("CONNECTED");
         const rooms = [];
+        [
+            "https://tinyurl.com/PhotoNumberOne",
+            "https://tinyurl.com/PhotoNumberTwo",
+            "https://tinyurl.com/PhotoNumberThreee",
+            "https://tinyurl.com/PhotoNumberFour",
+            "https://tinyurl.com/PhotoNumberFive",
+        ];
         for (let i = 0; i < ITERATIONS; i++) {
             const roomData = {
-                photos: faker_1.faker.image.urlPicsumPhotos(),
+                photos: faker_1.faker.helpers.arrayElement([
+                    "https://tinyurl.com/PhotoNumberOne",
+                    "https://tinyurl.com/PhotoNumberTwo",
+                    "https://tinyurl.com/PhotoNumberThreee",
+                    "https://tinyurl.com/PhotoNumberFour",
+                    "https://tinyurl.com/PhotoNumberFive",
+                ]),
                 number: faker_1.faker.number.int({ min: 100, max: 300 }),
                 description: faker_1.faker.lorem.sentence({ min: 10, max: 40 }),
                 type: faker_1.faker.helpers.arrayElement([
