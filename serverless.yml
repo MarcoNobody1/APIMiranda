@@ -1,14 +1,14 @@
-service: API-hotel-miranda
+service: miranda-backend
 frameworkVersion: "3"
 
 provider:
   name: aws
   runtime: nodejs18.x
-  region: eu-west-1 
+  region: eu-west-1
   environment:
     SECRET_KEY: ${file(.env.json):SECRET_KEY}
     ATLAS_SERVER: ${file(.env.json):ATLAS_SERVER}
-    
+
 functions:
   api:
     handler: dist/lambda.handler

@@ -18,12 +18,12 @@ const info_1 = require("./controllers/info");
 exports.app = (0, express_1.default)();
 exports.app.use((0, cors_1.default)({
     origin: [
-        "http://localhost:3000",
-        "http://localhost:3000/login",
-        "http://localhost:3000/bookings",
-        "http://localhost:3000/rooms",
-        "http://localhost:3000/contacts",
-        "http://localhost:3000/users",
+        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com",
+        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/login",
+        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/bookings",
+        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/rooms",
+        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/contacts",
+        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/users",
     ],
     credentials: true,
     methods: ["GET", "PUT", "POST", "DELETE"],
