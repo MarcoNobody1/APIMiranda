@@ -10,6 +10,7 @@ const bookingsSchema = new Schema<BookingInterface>({
   check_out: { type: String, required: true },
   special_request: { type: String, required: true },
   room_id: { type: String, required: true },
+  room_photos: {type: [String], required: true},
   room_type: { type: String, required: true },
   room_number: { type: String, required: true },
   room_amenities: { type: [String], required: true },
