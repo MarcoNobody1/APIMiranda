@@ -1,21 +1,19 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-
-const defaultUser = {
-  user: "admin",
-  password: "admin",
-};
+import { Users } from "../models/Users.model";
 
 const secretToken: string = process.env.SECRET_KEY || "";
 
-async function login(user: string, password: string) {
-  if (defaultUser.user !== user || defaultUser.password !== password) {
-    throw new Error("Username or Password Incorrect!");
-  }
-  return await signJWT({ user });
+async function login(username: string, password: string) {
+console.log(username)
+  const result = await Users.findOne({ username: username });
+  console.log(result);
+  if (!result) throw new Error("Username or Password Incorrect!");
+
+  return signJWT({ username });
 }
 
-function signJWT(payload: { user: string }) {
+function signJWT(payload: { username: string }) {
   const token = jwt.sign(payload, secretToken);
   return { payload, token };
 }
