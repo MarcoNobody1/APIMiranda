@@ -13,21 +13,7 @@ ConnectToDatabase();
 
 export const app: Express = express();
 
-app.use(
-  cors({
-    origin: [
-      "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com",
-      "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/login",
-      "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/bookings",
-      "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/rooms",
-      "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/contacts",
-      "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/users",
-    ],
-    credentials: true,
-    methods: ["GET", "PUT", "POST", "DELETE"],
-    allowedHeaders: "token",
-  })
-);
+app.use(cors());
 
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") return res.end();

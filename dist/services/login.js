@@ -8,12 +8,11 @@ require("dotenv/config");
 const Users_model_1 = require("../models/Users.model");
 const secretToken = process.env.SECRET_KEY || "";
 async function login(username, password) {
-    console.log(username);
     const result = await Users_model_1.Users.findOne({ username: username });
-    console.log(result);
     if (!result)
         throw new Error("Username or Password Incorrect!");
-    return signJWT({ username });
+    const email = result.email;
+    return signJWT({ username, email });
 }
 function signJWT(payload) {
     const token = jsonwebtoken_1.default.sign(payload, secretToken);
