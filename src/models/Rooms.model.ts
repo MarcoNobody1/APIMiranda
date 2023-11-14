@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 import { RoomInterface } from "../interfaces/Rooms";
 
 const roomsSchema = new Schema<RoomInterface>({
-  photos: { type: String, required: true },
+  photos: { type: [String], required: true },
   number: { type: Number, required: true },
   description: { type: String, required: true },
   type: { type: String, required: true },

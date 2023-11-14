@@ -34,23 +34,18 @@ async function seedDatabase() {
 
     const rooms: RoomInterface[] = [];
 
-    [
-      "https://tinyurl.com/PhotoNumberOne",
-      "https://tinyurl.com/PhotoNumberTwo",
-      "https://tinyurl.com/PhotoNumberThreee",
-      "https://tinyurl.com/PhotoNumberFour",
-      "https://tinyurl.com/PhotoNumberFive",
-    ];
-
     for (let i = 0; i < ITERATIONS; i++) {
       const roomData: RoomInterface = {
-        photos: faker.helpers.arrayElement([
-          "https://tinyurl.com/PhotoNumberOne",
-          "https://tinyurl.com/PhotoNumberTwo",
-          "https://tinyurl.com/PhotoNumberThreee",
-          "https://tinyurl.com/PhotoNumberFour",
-          "https://tinyurl.com/PhotoNumberFive",
-        ]),
+        photos: faker.helpers.arrayElements(
+          [
+            "https://tinyurl.com/PhotoNumberOne",
+            "https://tinyurl.com/PhotoNumberTwo",
+            "https://tinyurl.com/PhotoNumberThreee",
+            "https://tinyurl.com/PhotoNumberFour",
+            "https://tinyurl.com/PhotoNumberFive",
+          ],
+          { min: 3, max: 3 }
+        ),
         number: faker.number.int({ min: 100, max: 300 }),
         description: faker.lorem.sentence({ min: 10, max: 40 }),
         type: faker.helpers.arrayElement([
@@ -59,7 +54,34 @@ async function seedDatabase() {
           "Double Superior",
           "Suite",
         ]),
-        amenities: faker.helpers.arrayElements(
+        amenities: faker.helpers.arrayElement([
+          [
+            "1/3 Bed Space",
+            "Air Conditioner",
+            "Television",
+            "Towels",
+            "Coffee Set",
+          ],
+          [
+            "1/2 Bathroom",
+            "Free Wifi",
+            "Air Conditioner",
+            "Television",
+            "Towels",
+            "Mini Bar",
+            "Coffee Set",
+          ],
+          [
+            "1/3 Bed Space",
+            "24-Hour Guard",
+            "Free Wifi",
+            "Air Conditioner",
+            "Television",
+            "Towels",
+            "Mini Bar",
+            "Coffee Set",
+            "Nice Views",
+          ],
           [
             "1/3 Bed Space",
             "24-Hour Guard",
@@ -73,8 +95,7 @@ async function seedDatabase() {
             "Jacuzzi",
             "Nice Views",
           ],
-          { min: 3, max: 11 }
-        ),
+        ]),
         price: faker.number.int({ min: 100, max: 300 }),
         discount: Math.ceil(faker.number.int({ min: 5, max: 30 }) / 5) * 5,
         availability: faker.helpers.arrayElement(["Available", "Booked"]),
@@ -107,6 +128,7 @@ async function seedDatabase() {
           .toString(),
         special_request: faker.lorem.sentence({ min: 7, max: 25 }),
         room_id: room._id,
+        room_photos: room.photos,
         room_type: room.type,
         room_number: room.number.toString(),
         room_amenities: room.amenities,
@@ -153,7 +175,7 @@ async function seedDatabase() {
 
     for (let i = 0; i < ITERATIONS; i++) {
       const userData: UserInterface = {
-        avatar: faker.image.avatar(),
+        avatar: faker.image.avatarGitHub(),
         username: faker.internet.userName(),
         position: faker.helpers.arrayElement([
           "Room Service",
