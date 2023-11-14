@@ -29,22 +29,15 @@ async function seedDatabase() {
         });
         console.log("CONNECTED");
         const rooms = [];
-        [
-            "https://tinyurl.com/PhotoNumberOne",
-            "https://tinyurl.com/PhotoNumberTwo",
-            "https://tinyurl.com/PhotoNumberThreee",
-            "https://tinyurl.com/PhotoNumberFour",
-            "https://tinyurl.com/PhotoNumberFive",
-        ];
         for (let i = 0; i < ITERATIONS; i++) {
             const roomData = {
-                photos: faker_1.faker.helpers.arrayElement([
+                photos: faker_1.faker.helpers.arrayElements([
                     "https://tinyurl.com/PhotoNumberOne",
                     "https://tinyurl.com/PhotoNumberTwo",
                     "https://tinyurl.com/PhotoNumberThreee",
                     "https://tinyurl.com/PhotoNumberFour",
                     "https://tinyurl.com/PhotoNumberFive",
-                ]),
+                ], { min: 3, max: 3 }),
                 number: faker_1.faker.number.int({ min: 100, max: 300 }),
                 description: faker_1.faker.lorem.sentence({ min: 10, max: 40 }),
                 type: faker_1.faker.helpers.arrayElement([
@@ -53,19 +46,48 @@ async function seedDatabase() {
                     "Double Superior",
                     "Suite",
                 ]),
-                amenities: faker_1.faker.helpers.arrayElements([
-                    "1/3 Bed Space",
-                    "24-Hour Guard",
-                    "Free Wifi",
-                    "Air Conditioner",
-                    "Television",
-                    "Towels",
-                    "Mini Bar",
-                    "Coffee Set",
-                    "Bathtub",
-                    "Jacuzzi",
-                    "Nice Views",
-                ], { min: 3, max: 11 }),
+                amenities: faker_1.faker.helpers.arrayElement([
+                    [
+                        "1/3 Bed Space",
+                        "Air Conditioner",
+                        "Television",
+                        "Towels",
+                        "Coffee Set",
+                    ],
+                    [
+                        "1/2 Bathroom",
+                        "Free Wifi",
+                        "Air Conditioner",
+                        "Television",
+                        "Towels",
+                        "Mini Bar",
+                        "Coffee Set",
+                    ],
+                    [
+                        "1/3 Bed Space",
+                        "24-Hour Guard",
+                        "Free Wifi",
+                        "Air Conditioner",
+                        "Television",
+                        "Towels",
+                        "Mini Bar",
+                        "Coffee Set",
+                        "Nice Views",
+                    ],
+                    [
+                        "1/3 Bed Space",
+                        "24-Hour Guard",
+                        "Free Wifi",
+                        "Air Conditioner",
+                        "Television",
+                        "Towels",
+                        "Mini Bar",
+                        "Coffee Set",
+                        "Bathtub",
+                        "Jacuzzi",
+                        "Nice Views",
+                    ],
+                ]),
                 price: faker_1.faker.number.int({ min: 100, max: 300 }),
                 discount: Math.ceil(faker_1.faker.number.int({ min: 5, max: 30 }) / 5) * 5,
                 availability: faker_1.faker.helpers.arrayElement(["Available", "Booked"]),
@@ -92,6 +114,7 @@ async function seedDatabase() {
                     .toString(),
                 special_request: faker_1.faker.lorem.sentence({ min: 7, max: 25 }),
                 room_id: room._id,
+                room_photos: room.photos,
                 room_type: room.type,
                 room_number: room.number.toString(),
                 room_amenities: room.amenities,
@@ -130,7 +153,7 @@ async function seedDatabase() {
         const users = [];
         for (let i = 0; i < ITERATIONS; i++) {
             const userData = {
-                avatar: faker_1.faker.image.avatar(),
+                avatar: faker_1.faker.image.avatarGitHub(),
                 username: faker_1.faker.internet.userName(),
                 position: faker_1.faker.helpers.arrayElement([
                     "Room Service",
