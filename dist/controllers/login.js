@@ -9,7 +9,7 @@ const login_1 = __importDefault(require("../services/login"));
 exports.loginController = (0, express_1.Router)();
 exports.loginController.post("/", async (req, res) => {
     try {
-        const username = req.body.user;
+        const username = req.body.username;
         const password = req.body.password;
         const result = await login_1.default.login(username, password);
         res.json(result);

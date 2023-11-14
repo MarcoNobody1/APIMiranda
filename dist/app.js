@@ -16,19 +16,7 @@ const connect_1 = require("./util/connect");
 const info_1 = require("./controllers/info");
 (0, connect_1.ConnectToDatabase)();
 exports.app = (0, express_1.default)();
-exports.app.use((0, cors_1.default)({
-    origin: [
-        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com",
-        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/login",
-        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/bookings",
-        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/rooms",
-        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/contacts",
-        "https://7zclei7sla.execute-api.eu-west-1.amazonaws.com/users",
-    ],
-    credentials: true,
-    methods: ["GET", "PUT", "POST", "DELETE"],
-    allowedHeaders: "token",
-}));
+exports.app.use((0, cors_1.default)());
 exports.app.use((req, res, next) => {
     if (req.method === "OPTIONS")
         return res.end();
