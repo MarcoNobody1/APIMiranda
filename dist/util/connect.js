@@ -7,7 +7,7 @@ exports.ConnectToDatabase = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv/config");
 const mongodb_1 = require("mongodb");
-const serverHost = process.env.ATLAS_SERVER || '';
+const serverHost = process.env.SERVER_URL || '';
 const databaseName = process.env.DB_NAME || "";
 const ConnectToDatabase = async () => {
     console.log(serverHost);

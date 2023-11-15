@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import "dotenv/config";
 import { ServerApiVersion } from 'mongodb';
 
-const serverHost: string = process.env.ATLAS_SERVER || '';
+const serverHost: string = process.env.SERVER_URL || '';
 const databaseName: string = process.env.DB_NAME || "";
 export const ConnectToDatabase = async () => {
     console.log(serverHost)
