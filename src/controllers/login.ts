@@ -15,7 +15,7 @@ loginController.post(
       const result = await authService.login(username, password);
       res.json(result);
     } catch (error) {
-      res.status(400).json(`${error}`);
+      res.status(401).json(`${error}`);
     }
   }
 );

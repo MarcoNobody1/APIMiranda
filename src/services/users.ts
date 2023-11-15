@@ -1,5 +1,6 @@
 import { UserInterface } from "../interfaces/Users";
 import { Users } from "../models/Users.model";
+import bcrypt from "bcryptjs";
 
 async function getAllUsers() {
   const users = await Users.find();
@@ -14,6 +15,7 @@ async function getOneUser(userId: string) {
 }
 
 async function postNewUser(User: UserInterface) {
+  User.password = bcrypt.hashSync(User.password || "", 10)
   const newUser = await Users.create(User);
   if (!newUser) throw new Error("Tu usuario no se añadio correctamente.");
   return newUser;

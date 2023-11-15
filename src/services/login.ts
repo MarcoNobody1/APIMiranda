@@ -1,19 +1,27 @@
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { Users } from "../models/Users.model";
+import bcrypt from "bcryptjs";
 
 const secretToken: string = process.env.SECRET_KEY || "";
 
 async function login(username: string, password: string) {
   const result = await Users.findOne({ username: username });
 
-  if (!result) throw new Error("Username or Password Incorrect!");
-  const email: string = result.email;
+  if (!result) throw new Error("Not valid Username!");
 
-  return signJWT({ username, email });
+  const email: string = result.email;
+  const avatar: string = result.avatar;
+
+  const passwordOk = await bcrypt.compare(password, result.password || "");
+
+  if (!passwordOk)
+    throw new Error("Something went wrong. Email or Password Incorrect.");
+
+  return signJWT({ username, email, avatar });
 }
 
-function signJWT(payload: { username: string; email: string }) {
+function signJWT(payload: { username: string; email: string; avatar: string }) {
   const token = jwt.sign(payload, secretToken);
   return { payload, token };
 }

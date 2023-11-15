@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.userService = void 0;
 const Users_model_1 = require("../models/Users.model");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 async function getAllUsers() {
     const users = await Users_model_1.Users.find();
     if (users.length === 0)
@@ -15,6 +19,7 @@ async function getOneUser(userId) {
     return user;
 }
 async function postNewUser(User) {
+    User.password = bcryptjs_1.default.hashSync(User.password || "", 10);
     const newUser = await Users_model_1.Users.create(User);
     if (!newUser)
         throw new Error("Tu usuario no se añadio correctamente.");
