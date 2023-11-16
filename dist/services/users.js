@@ -26,6 +26,12 @@ async function postNewUser(User) {
     return newUser;
 }
 async function updateUser(userId, update) {
+    if (update.password) {
+        update.password = bcryptjs_1.default.hashSync(update.password || ", 10");
+    }
+    else {
+        false;
+    }
     const updatedUser = await Users_model_1.Users.findByIdAndUpdate(userId, update, {
         new: true,
     });
