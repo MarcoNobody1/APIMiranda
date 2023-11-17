@@ -38,11 +38,11 @@ async function seedDatabase() {
       const roomData: RoomInterface = {
         photos: faker.helpers.arrayElements(
           [
-            "https://drive.google.com/uc?id=1jXhbqo_gUMvulPG8n8e1j4dijekpHLr8",
-            "https://drive.google.com/uc?id=1KMksFwpQbrKk8Uvtm0PNCjofwP-WI4RV",
-            "https://drive.google.com/uc?id=1HZB5MtKjpFpLnql1cNlpPYmbyL4NKhP7",
-            "https://drive.google.com/uc?id=1u8ymD1Ru316qMc-kwUX6PIBhN12ZGsgI",
-            "https://drive.google.com/uc?id=19ReuAI0Ev0XiT9cqhFr-P2VordnUTYAZ",
+            "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room1.jpeg",
+            "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room2.jpeg",
+            "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room3.jpeg",
+            "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room4.jpeg",
+            "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room5.jpeg",
           ],
           { min: 3, max: 3 }
         ),
