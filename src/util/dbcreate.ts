@@ -169,7 +169,15 @@ async function seedDatabase() {
 
       const query2 = "INSERT INTO photos (photo_url, room_id) VALUES (?, ?)";
 
-      const fields2 = [faker.image.urlPicsumPhotos(), roomId];
+      const fields2 = [faker.helpers.arrayElement(
+        [
+          "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room1.jpeg",
+          "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room2.jpeg",
+          "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room3.jpeg",
+          "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room4.jpeg",
+          "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room5.jpeg",
+        ]
+      ), roomId];
 
       await QueryHandler(query2, fields2);
 
@@ -187,9 +195,9 @@ async function seedDatabase() {
       const fields = [
         faker.person.firstName(),
         faker.person.lastName(),
-        faker.date.between({ from: "2020-01-01", to: "2020-02-01" }),
-        faker.date.between({ from: "2020-03-01", to: "2020-03-31" }),
-        faker.date.between({ from: "2020-04-01", to: "2020-04-30" }),
+        faker.date.between({ from: "2023-01-01", to: "2023-08-01" }),
+        faker.date.between({ from: "2023-08-01", to: "2023-10-01" }),
+        faker.date.between({ from: "2023-10-02", to: "2023-12-31" }),
         faker.lorem.sentence({ min: 7, max: 25 }),
         faker.number.int({ min: 1, max: 10 }),
         faker.number.int({ min: 100, max: 300 }),
