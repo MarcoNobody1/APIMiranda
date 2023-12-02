@@ -44,7 +44,7 @@ connection.connect((err: any) => {
 });
 
 const ITERATIONS: number = 10;
-const BOOKINGITERATIONS: number = ITERATIONS * 8;
+const MAXITERATIONS: number = ITERATIONS * 8;
 
 async function seedDatabase() {
   try {
@@ -147,7 +147,7 @@ async function seedDatabase() {
 
     console.log("Amenities seeded! :)")
 
-    for (let i = 0; i < ITERATIONS; i++) {
+    for (let i = 0; i < MAXITERATIONS; i++) {
       const query = `INSERT INTO room (number, type, description, price, discount, availability) VALUES (?,?,?,?,?,?)`;
       const fields = [
         faker.number.int({ min: 100, max: 300 }),
@@ -157,9 +157,9 @@ async function seedDatabase() {
           "Double Superior",
           "Suite",
         ]),
-        faker.lorem.sentence({ min: 8, max: 15 }),
+        faker.lorem.sentence({ min: 10, max: 12 }),
         faker.number.int({ min: 100, max: 300 }),
-        Math.ceil(faker.number.int({ min: 5, max: 30 }) / 5) * 5,
+        Math.random() < 0.5 ? 0 : Math.ceil(faker.number.int({ min: 1, max: 30 }) / 5) * 5,
         faker.helpers.arrayElement(["Available", "Booked"]),
       ];
 
@@ -188,7 +188,7 @@ async function seedDatabase() {
 
     console.log("Rooms seeded! :)");
 
-    for (let i = 0; i < BOOKINGITERATIONS; i++) {
+    for (let i = 0; i < MAXITERATIONS; i++) {
       const query =
         "INSERT INTO booking (nombre, apellido, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?)";
 
