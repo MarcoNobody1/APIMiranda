@@ -8,6 +8,9 @@ provider:
   environment:
     SECRET_KEY: ${file(.env.json):SECRET_KEY}
     ATLAS_SERVER: ${file(.env.json):ATLAS_SERVER}
+    EMAIL_SENDER: ${file(.env.json):EMAIL_SENDER}
+    EMAIL_PASSWORD: ${file(.env.json):EMAIL_PASSWORD}
+    EMAIL_RECEIVER: ${file(.env.json):EMAIL_RECEIVER}
 
 functions:
   api:
