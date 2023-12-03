@@ -33,4 +33,4 @@ app.use("/bookings", bookingsController);
 app.use("/rooms", roomsController);
 app.use("/users", usersController);
 app.use("/contacts", contactsController);
-app.use("/send-email", emailController);
+app.use("/send", emailController);
