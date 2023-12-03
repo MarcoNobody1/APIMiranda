@@ -11,7 +11,7 @@ const password = process.env.EMAIL_PASSWORD || "";
 const receiver = process.env.EMAIL_RECEIVER || "";
 async function sendEmail(subject, text) {
     const transporter = nodemailer_1.default.createTransport({
-        service: 'gmail',
+        service: "gmail",
         auth: {
             user: sender,
             pass: password,
@@ -21,7 +21,11 @@ async function sendEmail(subject, text) {
         from: sender,
         to: receiver,
         subject,
-        text,
+        html: `<html>
+    <body>
+      ${text}
+    </body>
+  </html>`,
     };
     await transporter.sendMail(mailOptions);
 }
