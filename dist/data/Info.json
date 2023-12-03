@@ -29,7 +29,8 @@
                 "subroutes-methods": {
                     "/id": ["GET", "PUT", "DELETE"]
                 }
-            }
+            },
+            "/send": "POST"
         }
     }
 }
