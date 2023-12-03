@@ -8,6 +8,7 @@ import { contactsController } from "./controllers/contacts";
 import { usersController } from "./controllers/users";
 import { ConnectToDatabase } from "./util/connect";
 import { infoController } from "./controllers/info";
+import { emailController } from "./controllers/email";
 
 ConnectToDatabase();
 
@@ -32,3 +33,4 @@ app.use("/bookings", bookingsController);
 app.use("/rooms", roomsController);
 app.use("/users", usersController);
 app.use("/contacts", contactsController);
+app.use("/send-email", emailController);
