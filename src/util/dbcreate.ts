@@ -199,7 +199,7 @@ async function seedDatabase() {
         faker.date.between({ from: "2023-08-01", to: "2023-10-01" }),
         faker.date.between({ from: "2023-10-02", to: "2023-12-31" }),
         faker.lorem.sentence({ min: 7, max: 25 }),
-        faker.number.int({ min: 1, max: 10 }),
+        faker.number.int({ min: 1, max: 80 }),
         faker.number.int({ min: 100, max: 300 }),
         faker.helpers.arrayElement(["Check In", "Check Out", "In Progress"]),
       ];
