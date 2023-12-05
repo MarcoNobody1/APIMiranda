@@ -73,7 +73,7 @@ async function seedDatabase() {
       id INT NOT NULL AUTO_INCREMENT,
       nombre VARCHAR(45) NOT NULL,
       apellido VARCHAR(45) NOT NULL,
-      order_date DATE NOT NULL,
+      order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       check_in DATETIME NOT NULL,
       check_out DATETIME NOT NULL,
       special_request VARCHAR(255) NOT NULL,
