@@ -228,7 +228,7 @@ async function seedDatabase() {
       } while (datesOverlap(existingDates, checkInDate, checkOutDate));
 
       const query =
-        "INSERT INTO booking (nombre, apellido, email, phone, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        "INSERT INTO booking (name, surname, email, phone, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
       const fields = [
         faker.person.firstName(),
