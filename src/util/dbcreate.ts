@@ -73,6 +73,8 @@ async function seedDatabase() {
       id INT NOT NULL AUTO_INCREMENT,
       nombre VARCHAR(45) NOT NULL,
       apellido VARCHAR(45) NOT NULL,
+      email VARCHAR(255) NOT NULL,
+      phone VARCHAR(45) NOT NULL,
       order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
       check_in DATETIME NOT NULL,
       check_out DATETIME NOT NULL,
@@ -226,11 +228,16 @@ async function seedDatabase() {
       } while (datesOverlap(existingDates, checkInDate, checkOutDate));
 
       const query =
-        "INSERT INTO booking (nombre, apellido, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?)";
+        "INSERT INTO booking (nombre, apellido, email, phone, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
       const fields = [
         faker.person.firstName(),
         faker.person.lastName(),
+        faker.internet.email({
+          provider: "hotelmiranda.com",
+          allowSpecialCharacters: false,
+        }),
+        faker.phone.number(),
         new Date(),
         checkInDate,
         checkOutDate,
