@@ -71,8 +71,8 @@ async function seedDatabase() {
 
     await QueryHandler(`CREATE TABLE IF NOT EXISTS booking (
       id INT NOT NULL AUTO_INCREMENT,
-      nombre VARCHAR(45) NOT NULL,
-      apellido VARCHAR(45) NOT NULL,
+      name VARCHAR(45) NOT NULL,
+      surname VARCHAR(45) NOT NULL,
       email VARCHAR(255) NOT NULL,
       phone VARCHAR(45) NOT NULL,
       order_date DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
