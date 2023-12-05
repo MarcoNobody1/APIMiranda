@@ -48,7 +48,6 @@ const MAXITERATIONS: number = ITERATIONS * 8;
 
 async function seedDatabase() {
   try {
-
     console.log("CONNECTED TO DATABASE");
 
     await QueryHandler(`CREATE TABLE IF NOT EXISTS amenity (
@@ -145,7 +144,7 @@ async function seedDatabase() {
     await QueryHandler(`INSERT INTO amenity (amenity) 
     VALUES ("1/3 Bed Space"),("24-Hour Guard"),("Free Wifi"),("Air Conditioner"),("Television"),("Towels"),("Mini Bar"),("Coffee Set"),("Bathtub"),("Jacuzzi"), ("Nice Views")`);
 
-    console.log("Amenities seeded! :)")
+    console.log("Amenities seeded! :)");
 
     for (let i = 0; i < MAXITERATIONS; i++) {
       const query = `INSERT INTO room (number, type, description, price, discount, availability) VALUES (?,?,?,?,?,?)`;
@@ -159,7 +158,9 @@ async function seedDatabase() {
         ]),
         faker.lorem.sentence({ min: 10, max: 12 }),
         faker.number.int({ min: 100, max: 300 }),
-        Math.random() < 0.5 ? 0 : Math.ceil(faker.number.int({ min: 1, max: 30 }) / 5) * 5,
+        Math.random() < 0.5
+          ? 0
+          : Math.ceil(faker.number.int({ min: 1, max: 30 }) / 5) * 5,
         faker.helpers.arrayElement(["Available", "Booked"]),
       ];
 
@@ -169,15 +170,16 @@ async function seedDatabase() {
 
       const query2 = "INSERT INTO photos (photo_url, room_id) VALUES (?, ?)";
 
-      const fields2 = [faker.helpers.arrayElement(
-        [
+      const fields2 = [
+        faker.helpers.arrayElement([
           "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room1.jpeg",
           "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room2.jpeg",
           "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room3.jpeg",
           "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room4.jpeg",
           "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Fotos+Dashboard/room5.jpeg",
-        ]
-      ), roomId];
+        ]),
+        roomId,
+      ];
 
       await QueryHandler(query2, fields2);
 
@@ -189,15 +191,49 @@ async function seedDatabase() {
     console.log("Rooms seeded! :)");
 
     for (let i = 0; i < MAXITERATIONS; i++) {
+      const today = new Date();
+
+      const futureDate = new Date(today);
+      futureDate.setDate(today.getDate() + 365);
+
+      const futureDatePlus = new Date(futureDate);
+      futureDatePlus.setDate(futureDate.getDate() + 1);
+
+      const existingDatesQuery =
+        "SELECT check_in, check_out FROM booking WHERE (check_in BETWEEN ? AND ?) OR (check_out BETWEEN ? AND ?)";
+      const existingDatesFields = [
+        today,
+        futureDatePlus,
+        today,
+        futureDatePlus,
+      ];
+      const existingDates = await QueryHandler(
+        existingDatesQuery,
+        existingDatesFields
+      );
+
+      let checkInDate, checkOutDate;
+      do {
+        checkInDate = faker.date.between({
+          from: today,
+          to: futureDate,
+        });
+
+        checkOutDate = faker.date.between({
+          from: checkInDate,
+          to: futureDatePlus,
+        });
+      } while (datesOverlap(existingDates, checkInDate, checkOutDate));
+
       const query =
         "INSERT INTO booking (nombre, apellido, order_date, check_in, check_out, special_request, room_id, price, status) VALUES (?,?,?,?,?,?,?,?,?)";
 
       const fields = [
         faker.person.firstName(),
         faker.person.lastName(),
-        faker.date.between({ from: "2023-01-01", to: "2023-08-01" }),
-        faker.date.between({ from: "2023-08-01", to: "2023-10-01" }),
-        faker.date.between({ from: "2023-10-02", to: "2023-12-31" }),
+        new Date(),
+        checkInDate,
+        checkOutDate,
         faker.lorem.sentence({ min: 7, max: 25 }),
         faker.number.int({ min: 1, max: 80 }),
         faker.number.int({ min: 100, max: 300 }),
@@ -207,14 +243,36 @@ async function seedDatabase() {
       await QueryHandler(query, fields);
     }
 
+    function datesOverlap(
+      existingDates: any,
+      newCheckIn: any,
+      newCheckOut: any
+    ) {
+      for (const { check_in, check_out } of existingDates) {
+        if (
+          (newCheckIn >= check_in && newCheckIn < check_out) ||
+          (newCheckOut > check_in && newCheckOut <= check_out) ||
+          (newCheckIn <= check_in && newCheckOut >= check_out)
+        ) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     console.log("Bookings seeded! :)");
 
     for (let i = 0; i < ITERATIONS; i++) {
       const query =
         "INSERT INTO contact (date, name, email, phone, subject, comment, archived) VALUES (?,?,?,?,?,?,?)";
 
+      const today = new Date();
+
+      const pastDate = new Date(today);
+      pastDate.setDate(today.getDate() - 365);
+
       const fields = [
-        faker.date.between({ from: "2020-01-01", to: "2021-01-01" }),
+        faker.date.between({ from: pastDate, to: today }),
         faker.person.fullName(),
         faker.internet.email({
           provider: "anymail.com",
@@ -235,6 +293,11 @@ async function seedDatabase() {
       const query =
         "INSERT INTO user (photo, username, position, email, password, start_date, job_description, contact, activity) VALUES (?,?,?,?,?,?,?,?,?)";
 
+      const today = new Date();
+
+      const futureDate = new Date(today);
+      futureDate.setDate(today.getDate() + 365);
+
       const fields = [
         faker.image.avatar(),
         faker.internet.userName(),
@@ -244,7 +307,7 @@ async function seedDatabase() {
           allowSpecialCharacters: false,
         }),
         faker.internet.password({ length: 20 }),
-        faker.date.between({ from: "2023-11-01", to: "2023-12-31" }),
+        faker.date.between({ from: today, to: futureDate }),
         faker.person.jobTitle(),
         faker.phone.number(),
         faker.helpers.arrayElement(["active", "inactive"]),
