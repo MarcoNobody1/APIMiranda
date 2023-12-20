@@ -14,12 +14,6 @@ jobs:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
-        env:
-          SECRET: ${{ secrets.SECRET_KEY }}
-          MONGO_URI: ${{ secrets.ATLAS_SERVER }}
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
