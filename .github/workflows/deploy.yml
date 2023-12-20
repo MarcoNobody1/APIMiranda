@@ -23,7 +23,7 @@ jobs:
       - name: NPM clean install
         run: npm ci
 
-      - name: Serverless
+      - name: Serverless deploy
         uses: serverless/github-action@v3.2.0
 
         with:
