@@ -1,4 +1,4 @@
-service: API-hotel-miranda
+service: miranda-backend
 frameworkVersion: "3"
 
 provider:
