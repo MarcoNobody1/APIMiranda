@@ -14,14 +14,9 @@ jobs:
 
       - name: Setting the env variables
         env:
-          SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          ATLAS_SERVER: ${{ secrets.ATLAS_SERVER }}
-          EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
-          EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
 
-        run: echo '{"SECRET_KEY":"${{ secrets.SECRET_KEY }}", "ATLAS_SERVER":"${{ secrets.ATLAS_SERVER }}", "EMAIL_SENDER":"${{ secrets.EMAIL_SENDER }}", "EMAIL_RECEIVER":"${{ secrets.EMAIL_RECEIVER }}", "EMAIL_PASSWORD":"${{ secrets.EMAIL_PASSWORD }}"}' > .env.json
+        run: echo '{"SECRET_KEY":"${{ secrets.SECRET_KEY }}", "ATLAS_SERVER":"${{ secrets.ATLAS_SERVER }}", "EMAIL_SENDER":"${{ secrets.EMAIL_SENDER }}", "EMAIL_RECEIVER":"${{ secrets.EMAIL_RECEIVER }}", "EMAIL_PASSWORD":"${{ secrets.EMAIL_PASSWORD }}", "DB_NAME":"${{ secrets.DB_NAME }}"}' > .env.json
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
