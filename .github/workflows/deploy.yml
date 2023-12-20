@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
         env:
-          SECRET: ${{ secrets.SECRET }}
-          MONGO_URI: ${{ secrets.MONGO_URI }}
+          SECRET: ${{ secrets.SECRET_KEY }}
+          MONGO_URI: ${{ secrets.ATLAS_SERVER }}
           EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
           EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
           EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
