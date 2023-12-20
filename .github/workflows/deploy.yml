@@ -14,14 +14,15 @@ jobs:
         node-version: [18.x]
     steps:
       - uses: actions/checkout@v3
+      
+      - name: Setting the env variables
+        run: echo '{"SECRET_KEY":"${{ secrets.SECRET_KEY }}", "ATLAS_SERVER":"${{ secrets.ATLAS_SERVER }}", "EMAIL_SENDER":"${{ secrets.EMAIL_SENDER }}", "EMAIL_RECEIVER":"${{ secrets.EMAIL_RECEIVER }}", "EMAIL_PASSWORD":"${{ secrets.EMAIL_PASSWORD }}"}' > .env.json
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: Setting the env variables
-        run: echo '{"SECRET_KEY":"${{ secrets.SECRET_KEY }}", "ATLAS_SERVER":"${{ secrets.ATLAS_SERVER }}", "EMAIL_SENDER":"${{ secrets.EMAIL_SENDER }}", "EMAIL_RECEIVER":"${{ secrets.EMAIL_RECEIVER }}", "EMAIL_PASSWORD":"${{ secrets.EMAIL_PASSWORD }}"}' > .env.json
-
+    
       - name: NPM clean install
         run: npm ci
 
