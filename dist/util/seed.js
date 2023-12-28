@@ -11,6 +11,7 @@ const Users_model_1 = require("../models/Users.model");
 const mongodb_1 = require("mongodb");
 const mongoose_1 = __importDefault(require("mongoose"));
 require("dotenv/config");
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const ITERATIONS = 10;
 const serverHost = (process.argv.includes("atlas")
     ? process.env.ATLAS_SERVER
@@ -28,6 +29,11 @@ async function seedDatabase() {
             },
         });
         console.log("CONNECTED");
+        Bookings_model_1.Bookings.collection.drop();
+        Rooms_model_1.Rooms.collection.drop();
+        Contacts_model_1.Contacts.collection.drop();
+        Users_model_1.Users.collection.drop();
+        console.log("Collections dropped! :(");
         const rooms = [];
         const roomDescriptions = [
             "Discover comfort and style in our thoughtfully designed rooms. Each room is a haven of relaxation, featuring modern decor, plush furnishings, and ample space to unwind. Enjoy the convenience of high-speed Wi-Fi, a flat-screen TV, and 24-hour room service. Your perfect retreat awaits.",
@@ -154,6 +160,7 @@ async function seedDatabase() {
                     "Check Out",
                     "In Progress",
                 ]),
+                reference_number: faker_1.faker.string.nanoid(5),
             };
             bookings.push(bookingData);
         }
@@ -227,6 +234,31 @@ async function seedDatabase() {
             };
             users.push(userData);
         }
+        const testUser = {
+            avatar: faker_1.faker.image.avatarGitHub(),
+            username: "test",
+            position: "Room Service",
+            email: "test@test.com",
+            password: bcryptjs_1.default.hashSync("testuser" || "", 10),
+            start_date: "2023-11-15",
+            job_description: "Test user from Miranda Hotel",
+            contact: "687564921356",
+            activity: "active",
+        };
+        users.push(testUser);
+        const adminpass = process.env.ADMINPASSWORD || "12345678";
+        const adminUser = {
+            avatar: "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Photos/SQUAREPROFILEPHOTO.png",
+            username: "Marco",
+            position: "Admin",
+            email: "marcocamaradiaz@gmail.com",
+            password: bcryptjs_1.default.hashSync(adminpass || "", 10),
+            start_date: "1998-11-15",
+            job_description: "Total Administrator",
+            contact: "671251377",
+            activity: "active",
+        };
+        users.push(adminUser);
         await Users_model_1.Users.insertMany(users);
         console.log("Users seeded! :)");
     }

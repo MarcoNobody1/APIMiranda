@@ -14,6 +14,12 @@ async function getOneBooking(bookingId) {
         throw new Error("No hay ninguna reserva con ese id.");
     return booking;
 }
+async function getOneByRef(bookingRef) {
+    const booking = await Bookings_model_1.Bookings.findOne({ reference_number: bookingRef });
+    if (!booking)
+        throw new Error("No hay ninguna reserva con ese numero de referencia.");
+    return booking;
+}
 async function postNewBooking(booking) {
     const newBooking = await Bookings_model_1.Bookings.create(booking);
     if (!newBooking)
@@ -39,6 +45,7 @@ async function deleteBooking(bookingId) {
 exports.bookingService = {
     getAllBookings,
     getOneBooking,
+    getOneByRef,
     postNewBooking,
     updateBooking,
     delete: deleteBooking,

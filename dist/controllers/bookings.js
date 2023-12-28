@@ -22,6 +22,15 @@ exports.bookingsController.get("/:id", async (req, res) => {
         res.status(400).json(`${error}`);
     }
 });
+exports.bookingsController.get("/search/:refnumb", async (req, res) => {
+    try {
+        const booking = await bookings_1.bookingService.getOneByRef(req.params.refnumb);
+        res.json(booking);
+    }
+    catch (error) {
+        res.status(400).json(`${error}`);
+    }
+});
 exports.bookingsController.delete("/:id", async (req, res) => {
     try {
         const deleted = await bookings_1.bookingService.delete(req.params.id);

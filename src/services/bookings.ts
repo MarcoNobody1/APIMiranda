@@ -13,6 +13,12 @@ async function getOneBooking(bookingId: string) {
   return booking;
 }
 
+async function getOneByRef(bookingRef: string) {
+  const booking = await Bookings.findOne({reference_number: bookingRef});
+  if (!booking) throw new Error("No hay ninguna reserva con ese numero de referencia.");
+  return booking;
+}
+
 async function postNewBooking(booking: BookingInterface) {
   const newBooking = await Bookings.create(booking);
   if (!newBooking) throw new Error("Tu reserva no se añadio correctamente.");
@@ -47,6 +53,7 @@ async function deleteBooking(bookingId: string) {
 export const bookingService = {
   getAllBookings,
   getOneBooking,
+  getOneByRef,
   postNewBooking,
   updateBooking,
   delete: deleteBooking,
