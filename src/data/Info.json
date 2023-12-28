@@ -10,7 +10,7 @@
                 "methods": ["GET", "POST"],
                 "subroutes-methods": {
                     "/id": ["GET", "PUT", "DELETE"],
-                    "/search/refnumber": "GET"
+                    "/search/refnumb": "GET"
                 }
             },
             "/rooms": {
