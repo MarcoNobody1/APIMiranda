@@ -271,6 +271,36 @@ async function seedDatabase() {
       users.push(userData);
     }
 
+    const testUser: UserInterface = {
+      avatar: faker.image.avatarGitHub(),
+      username: "test",
+      position: "Room Service",
+      email: "test@test.com",
+      password: "testuser",
+      start_date: "2023-11-15",
+      job_description: "Test user from Miranda Hotel",
+      contact: "687564921356",
+      activity: "active",
+    };
+
+    users.push(testUser);
+
+    const adminpass = process.env.ADMINPASSWORD || "12345678";
+
+    const adminUser: UserInterface = {
+      avatar: faker.image.avatarGitHub(),
+      username: "Marco",
+      position: "Admin",
+      email: "marcocamaradiaz@gmail.com",
+      password: adminpass,
+      start_date: "1998-11-15",
+      job_description: "Total Administrator",
+      contact: "671251377",
+      activity: "active",
+    };
+
+    users.push(adminUser);
+
     await Users.insertMany(users);
     console.log("Users seeded! :)");
   } catch (error) {
