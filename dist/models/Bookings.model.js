@@ -21,5 +21,6 @@ const bookingsSchema = new Schema({
     room_description: { type: String, required: true },
     price: { type: Number, required: true },
     status: { type: String, required: true },
+    reference_number: { type: String, required: true },
 });
 exports.Bookings = mongoose_1.default.model("Bookings", bookingsSchema);
