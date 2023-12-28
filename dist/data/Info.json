@@ -9,7 +9,8 @@
             "/bookings": {
                 "methods": ["GET", "POST"],
                 "subroutes-methods": {
-                    "/id": ["GET", "PUT", "DELETE"]
+                    "/id": ["GET", "PUT", "DELETE"],
+                    "/search/refnumb": "GET"
                 }
             },
             "/rooms": {
