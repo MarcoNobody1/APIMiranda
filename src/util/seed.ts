@@ -10,6 +10,7 @@ import { Users } from "../models/Users.model";
 import { ServerApiVersion } from "mongodb";
 import mongoose from "mongoose";
 import "dotenv/config";
+import bcrypt from "bcryptjs";
 
 const ITERATIONS: number = 10;
 const serverHost: string =
@@ -276,7 +277,7 @@ async function seedDatabase() {
       username: "test",
       position: "Room Service",
       email: "test@test.com",
-      password: "testuser",
+      password: bcrypt.hashSync("testuser" || "", 10),
       start_date: "2023-11-15",
       job_description: "Test user from Miranda Hotel",
       contact: "687564921356",
@@ -288,11 +289,11 @@ async function seedDatabase() {
     const adminpass = process.env.ADMINPASSWORD || "12345678";
 
     const adminUser: UserInterface = {
-      avatar: faker.image.avatarGitHub(),
+      avatar: "https://dashboardgeneralassets.s3.eu-west-1.amazonaws.com/Photos/SQUAREPROFILEPHOTO.png",
       username: "Marco",
       position: "Admin",
       email: "marcocamaradiaz@gmail.com",
-      password: adminpass,
+      password: bcrypt.hashSync(adminpass || "", 10),
       start_date: "1998-11-15",
       job_description: "Total Administrator",
       contact: "671251377",
