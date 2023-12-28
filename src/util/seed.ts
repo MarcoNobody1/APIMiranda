@@ -32,6 +32,13 @@ async function seedDatabase() {
     });
     console.log("CONNECTED");
 
+    Bookings.collection.drop();
+    Rooms.collection.drop();
+    Contacts.collection.drop();
+    Users.collection.drop();
+
+    console.log("Collections dropped! :(");
+
     const rooms: RoomInterface[] = [];
 
     const roomDescriptions = [
@@ -179,6 +186,7 @@ async function seedDatabase() {
           "Check Out",
           "In Progress",
         ]),
+        reference_number: faker.string.nanoid(5),
       };
 
       bookings.push(bookingData);

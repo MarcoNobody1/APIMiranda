@@ -13,4 +13,5 @@ export interface BookingInterface {
   room_description: string;
   price: number;
   status: string;
+  reference_number: string;
 }
